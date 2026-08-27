@@ -50,7 +50,7 @@ let markup = try String(comment)
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-foundations/swift-html-render.git", branch: "main")
+    .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main")
 ]
 ```
 

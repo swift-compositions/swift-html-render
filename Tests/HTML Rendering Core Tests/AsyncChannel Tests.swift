@@ -1,7 +1,7 @@
-import Async_Channel_Primitives
+import Async_Channel
 import HTML_Rendering
 import HTML_Standard
-import Render_Primitives
+import Render
 import Testing
 
 @testable import HTML_Rendering_Core

@@ -2,7 +2,7 @@
 # Triaged by AI-assisted bulk pass (2026-04-29).
 description: "Declarative view-tree rendering to escaped HTML markup for Swift."
 topics:
-  - foundations
+  - compositions
   - html
 homepage: "https://swift-institute.org"
 readme:

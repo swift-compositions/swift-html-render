@@ -1,7 +1,7 @@
 import ASCII
-public import Dictionary_Ordered_Primitives
-import Dictionary_Primitives
-public import Render_Primitives
+public import Dictionary_Ordered
+import Dictionary
+public import Render
 public import WHATWG_HTML_Shared
 
 extension HTML {

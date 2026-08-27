@@ -1,6 +1,6 @@
 import HTML_Rendering
-import Ownership_Mutable_Primitives
-import Render_Primitives
+import Ownership_Mutable
+import Render
 import Testing
 
 @testable import HTML_Rendering_Core

@@ -1,9 +1,9 @@
 public import Buffer_Linear_Primitive
-public import Column_Primitives
-public import Dictionary_Ordered_Primitives
-public import Dictionary_Primitives
+public import Column
+public import Dictionary_Ordered
+public import Dictionary
 public import Hash_Indexed_Primitive
-import Hash_Primitives
+import Hash
 public import Ownership_Shared_Primitive
 public import WHATWG_HTML_Shared
 

@@ -1,6 +1,6 @@
-import Dictionary_Ordered_Primitives
-import Ownership_Mutable_Primitives
-import Render_Primitives
+import Dictionary_Ordered
+import Ownership_Mutable
+import Render
 public import WHATWG_HTML_Shared
 
 extension HTML {

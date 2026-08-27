@@ -1,5 +1,5 @@
-public import Ownership_Mutable_Primitives
-import Render_Primitives
+public import Ownership_Mutable
+import Render
 public import WHATWG_HTML_Shared
 
 extension Render.Context {
