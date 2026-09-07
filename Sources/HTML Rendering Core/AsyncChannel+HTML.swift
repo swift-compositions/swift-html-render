@@ -1,6 +1,6 @@
 public import Async_Channel
 public import Async_Primitive
-import Ownership_Mutable
+import Ownership
 import Render
 public import WHATWG_HTML_Shared
 

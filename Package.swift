@@ -65,7 +65,7 @@ extension Target.Dependency {
         .product(name: "Buffer Linear Primitive", package: "swift-buffer-linear")
     }
     static var ownershipMutablePrimitives: Self {
-        .product(name: "Ownership Mutable", package: "swift-ownership")
+        .product(name: "Ownership", package: "swift-ownership")
     }
     static var asyncChannelPrimitives: Self {
         .product(name: "Async Channel", package: "swift-async")
