@@ -68,7 +68,7 @@ extension Target.Dependency {
         .product(name: "Ownership", package: "swift-ownership")
     }
     static var asyncChannelPrimitives: Self {
-        .product(name: "Async Channel", package: "swift-async")
+        .product(name: "Async Channel", package: "swift-async-channel")
     }
     static var asyncPrimitive: Self {
         .product(name: "Async Primitive", package: "swift-async")
@@ -96,11 +96,12 @@ let package = Package(
 
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-molecules/swift-async-channel.git", branch: "main"),
         .package(
             url: "https://github.com/swift-molecules/swift-render.git",
             branch: "main"
         ),
-        .package(url: "https://github.com/swift-compositions/swift-ascii.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
         .package(url: "https://github.com/swift-standards/swift-html-standard.git", branch: "main"),
         .package(url: "https://github.com/swift-whatwg/swift-whatwg-html.git", branch: "main"),
         .package(url: "https://github.com/swift-w3c/swift-w3c-css.git", branch: "main"),
@@ -138,7 +139,7 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-async.git",
+            url: "https://github.com/swift-atoms/swift-async.git",
             branch: "main"
         ),
     ],
