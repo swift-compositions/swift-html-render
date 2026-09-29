@@ -1,12 +1,12 @@
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML {
 
     public struct AnyView: HTML.View, @unchecked Sendable {
-        let renderInto: (inout Render.Context) -> Void
+        let renderInto: (inout Renderer.Document.Context) -> Void
 
-        private init(renderInto: @escaping (inout Render.Context) -> Void) {
+        private init(renderInto: @escaping (inout Renderer.Document.Context) -> Void) {
             self.renderInto = renderInto
         }
 
@@ -26,7 +26,7 @@ extension HTML.AnyView {
 
     public static func _render(
         _ view: borrowing HTML.AnyView,
-        context: inout Render.Context
+        context: inout Renderer.Document.Context
     ) {
         view.renderInto(&context)
     }

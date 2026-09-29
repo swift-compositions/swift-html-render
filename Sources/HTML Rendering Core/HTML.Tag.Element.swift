@@ -1,5 +1,5 @@
 import ASCII
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML.Tag {
@@ -193,13 +193,13 @@ extension HTML.Tag.Element where Content: HTML.View {
     }
 }
 
-extension HTML.Tag.Element: Render.View where Content: HTML.View {
+extension HTML.Tag.Element: Renderer.Document.View where Content: HTML.View {
     public typealias Body = Never
     public var body: Never { fatalError("Body is Never and must not be accessed.") }
 
     public static func _render(
         _ view: borrowing Self,
-        context: inout Render.Context
+        context: inout Renderer.Document.Context
     ) {
         context.open(
             push: .element(

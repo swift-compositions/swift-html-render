@@ -1,9 +1,9 @@
 import Dictionary_Ordered
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML {
-    public protocol View: Render.View where Body: HTML.View {
+    public protocol View: Renderer.Document.View where Body: HTML.View {
         @HTML.Builder var body: Body { get }
     }
 }

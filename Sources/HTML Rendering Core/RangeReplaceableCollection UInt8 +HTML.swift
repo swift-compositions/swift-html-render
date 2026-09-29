@@ -1,5 +1,5 @@
 import Ownership
-import Render
+import Renderer
 public import WHATWG_HTML_Shared
 
 extension RangeReplaceableCollection<UInt8> {
@@ -9,7 +9,7 @@ extension RangeReplaceableCollection<UInt8> {
         configuration: HTML.Context.Configuration? = nil
     ) {
         let state = Ownership.Mutable(HTML.Context(configuration ?? .current))
-        var context = Render.Context.html(state: state)
+        var context = Renderer.Document.Context.html(state: state)
         context.render(view)
         self.init(state.value.bytes)
     }
@@ -23,7 +23,7 @@ extension RangeReplaceableCollection<UInt8> {
     ) async {
         await Task.yield()
         let state = Ownership.Mutable(HTML.Context(configuration ?? .current))
-        var context = Render.Context.html(state: state)
+        var context = Renderer.Document.Context.html(state: state)
         context.render(view)
         self.init(state.value.bytes)
     }

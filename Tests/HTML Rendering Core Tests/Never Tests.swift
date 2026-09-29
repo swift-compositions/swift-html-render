@@ -27,7 +27,7 @@ extension NeverHTMLTests.Unit {
 
             static func _render(
                 _ view: borrowing Self,
-                context: inout Render.Context
+                context: inout Renderer.Document.Context
             ) {
                 context.write(raw: Array("Custom".utf8))
             }

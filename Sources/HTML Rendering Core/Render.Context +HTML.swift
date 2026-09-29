@@ -1,19 +1,19 @@
 public import Ownership
-import Render
+import Renderer
 public import WHATWG_HTML_Shared
 
-extension Render.Context {
+extension Renderer.Document.Context {
 
     public static func html(state: Ownership.Mutable<HTML.Context>) -> Self {
         .init(
             text: { state.value.text($0) },
-            break: Render.Break(
+            break: Renderer.Document.Break(
                 line: { state.value.lineBreak() },
                 thematic: { state.value.thematicBreak() },
                 page: { state.value.pageBreak() }
             ),
             image: { state.value.image(source: $0, alt: $1) },
-            push: Render.Push(
+            push: Renderer.Document.Push(
                 block: { HTML.Context._pushBlock(&state.value, role: $0, style: $1) },
                 inline: { HTML.Context._pushInline(&state.value, role: $0, style: $1) },
                 list: { HTML.Context._pushList(&state.value, kind: $0, start: $1) },
@@ -32,7 +32,7 @@ extension Render.Context {
 
                 style: { HTML.Context._pushAttributes(&state.value) }
             ),
-            pop: Render.Pop(
+            pop: Renderer.Document.Pop(
                 block: { HTML.Context._popBlock(&state.value) },
                 inline: { HTML.Context._popInline(&state.value) },
                 list: { HTML.Context._popList(&state.value) },

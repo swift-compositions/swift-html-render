@@ -1,5 +1,5 @@
 import ASCII
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML {
@@ -24,7 +24,7 @@ extension HTML.Raw {
 
     public static func _render(
         _ view: borrowing Self,
-        context: inout Render.Context
+        context: inout Renderer.Document.Context
     ) {
         context.write(raw: view.bytes)
     }

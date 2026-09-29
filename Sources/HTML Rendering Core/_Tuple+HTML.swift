@@ -1,4 +1,4 @@
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
-extension Render._Tuple: HTML.View where repeat each Content: HTML.View {}
+extension Renderer.Document._Tuple: HTML.View where repeat each Content: HTML.View {}

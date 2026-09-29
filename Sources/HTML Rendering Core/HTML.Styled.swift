@@ -1,4 +1,4 @@
-import Render
+import Renderer
 public import W3C_CSS_Shared
 public import WHATWG_HTML_Shared
 
@@ -6,7 +6,7 @@ extension HTML {
 
     public struct Styled<Content, P: W3C_CSS_Shared.Property> {
 
-        public let content: Render.Indirect<Content>
+        public let content: Renderer.Document.Indirect<Content>
 
         public let property: P?
 
@@ -25,7 +25,7 @@ extension HTML {
             selector: HTML.Selector? = nil,
             pseudo: HTML.Pseudo? = nil
         ) {
-            self.content = Render.Indirect(content)
+            self.content = Renderer.Document.Indirect(content)
             self.property = property
             self.style = property.map {
                 HTML.Style.Rule($0, atRule: atRule, selector: selector, pseudo: pseudo)
@@ -37,13 +37,13 @@ extension HTML {
     }
 }
 
-extension HTML.Styled: Render.View where Content: HTML.View {
+extension HTML.Styled: Renderer.Document.View where Content: HTML.View {
     public typealias Body = Never
     public var body: Never { fatalError("Body is Never and must not be accessed.") }
 
     public static func _render(
         _ view: borrowing Self,
-        context: inout Render.Context
+        context: inout Renderer.Document.Context
     ) {
         context.open(push: .style, pop: .style)
         var handled = false

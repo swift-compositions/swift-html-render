@@ -2,7 +2,7 @@ import ASCII
 import Foundation
 import HTML_Rendering
 import HTML_Standard
-import Render
+import Renderer
 import Testing
 
 @_spi(DynamicHTML) @testable import HTML_Rendering_Core

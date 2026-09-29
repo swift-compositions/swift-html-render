@@ -22,7 +22,7 @@ extension Target.Dependency {
 
 extension Target.Dependency {
     static var renderingPrimitives: Self {
-        .product(name: "Render", package: "swift-render")
+        .product(name: "Renderer", package: "swift-renderer")
     }
     static var ascii: Self {
         .product(name: "ASCII", package: "swift-ascii")
@@ -55,11 +55,9 @@ extension Target.Dependency {
     static var hashIndexedPrimitive: Self {
         .product(name: "Hash Indexed Primitive", package: "swift-hash-table")
     }
-    static var columnPrimitives: Self {
-        .product(name: "Column", package: "swift-column")
-    }
-    static var hashPrimitives: Self {
-        .product(name: "Hash", package: "swift-hash")
+
+    static var hashTablePrimitive: Self {
+        .product(name: "Hash Table Primitive", package: "swift-hash-table")
     }
     static var bufferLinearPrimitive: Self {
         .product(name: "Buffer Linear Primitive", package: "swift-buffer-linear")
@@ -98,9 +96,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/swift-molecules/swift-async-channel.git", branch: "main"),
         .package(
-            url: "https://github.com/swift-molecules/swift-render.git",
-            branch: "main"
-        ),
+            url: "https://github.com/swift-atoms/swift-renderer.git",
+            branch: "main", traits: ["Document"]),
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
         .package(url: "https://github.com/swift-standards/swift-html-standard.git", branch: "main"),
         .package(url: "https://github.com/swift-whatwg/swift-whatwg-html.git", branch: "main"),
@@ -123,25 +120,23 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-column.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-hash.git",
-            branch: "main"
-        ),
-        .package(
             url: "https://github.com/swift-molecules/swift-buffer-linear.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-ownership.git",
+            url: "https://github.com/swift-atoms/swift-ownership.git",
             branch: "main"
         ),
         .package(
             url: "https://github.com/swift-atoms/swift-async.git",
             branch: "main"
         ),
+        .package(url: "https://github.com/swift-atoms/swift-buffer.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-buffer-ring.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-memory-allocation.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-storage.git", branch: "main", traits: ["Generational", "Memory"]),
+        .package(url: "https://github.com/swift-atoms/swift-store.git", branch: "main"),
     ],
     targets: [
 
@@ -159,12 +154,22 @@ let package = Package(
                 ),
                 .sharedPrimitive,
                 .hashIndexedPrimitive,
-                .columnPrimitives,
-                .hashPrimitives,
+                .hashTablePrimitive,
                 .bufferLinearPrimitive,
                 .ownershipMutablePrimitives,
                 .asyncChannelPrimitives,
                 .asyncPrimitive,
+                .product(name: "Buffer", package: "swift-buffer"),
+                .product(name: "Buffer Linear Primitive", package: "swift-buffer-linear"),
+                .product(name: "Buffer Linear Bounded Primitive", package: "swift-buffer-linear"),
+                .product(name: "Buffer Ring Primitive", package: "swift-buffer-ring"),
+                .product(name: "Memory Allocator Pool", package: "swift-memory-allocation"),
+                .product(name: "Memory Pool", package: "swift-memory-allocation"),
+                .product(name: "Memory Allocator", package: "swift-memory-allocation"),
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Ownership Shared Primitive", package: "swift-ownership-shared"),
+                .product(name: "Storage", package: "swift-storage"),
+                .product(name: "Store", package: "swift-store"),
             ]
         ),
 

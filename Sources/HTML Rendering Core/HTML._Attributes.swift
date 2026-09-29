@@ -1,18 +1,18 @@
 public import Dictionary_Ordered
 import Dictionary
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML {
 
     public struct _Attributes<Content: HTML.View>: HTML.View {
 
-        public let content: Render.Indirect<Content>
+        public let content: Renderer.Document.Indirect<Content>
 
         public var attributes: HTML.Context.Attributes
 
         public init(content: Content, attributes: HTML.Context.Attributes) {
-            self.content = Render.Indirect(content)
+            self.content = Renderer.Document.Indirect(content)
             self.attributes = attributes
         }
 
@@ -27,7 +27,7 @@ extension HTML {
 
         public static func _render(
             _ view: borrowing Self,
-            context: inout Render.Context
+            context: inout Renderer.Document.Context
         ) {
             context.open(push: .attributes, pop: .attributes)
             view.attributes.forEach { key, value in

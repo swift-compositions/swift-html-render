@@ -1,13 +1,13 @@
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
-extension Render.Builder {
+extension Renderer.Document.Builder {
 
-    public static func buildBlock() -> Render.Empty {
-        Render.Empty()
+    public static func buildBlock() -> Renderer.Document.Empty {
+        Renderer.Document.Empty()
     }
 }
 
 extension HTML {
-    public typealias Builder = Render.Builder
+    public typealias Builder = Renderer.Document.Builder
 }

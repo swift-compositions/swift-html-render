@@ -1,6 +1,6 @@
 import Dictionary_Ordered
 import Ownership
-import Render
+import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML {
@@ -17,7 +17,7 @@ extension HTML.__DocumentProtocol {
 
     public static func _render(
         _ html: borrowing Self,
-        context: inout Render.Context
+        context: inout Renderer.Document.Context
     ) {
         context.render(html.head)
         context.render(html.body)
@@ -32,7 +32,7 @@ extension HTML.__DocumentProtocol {
 
         let bodyState = Ownership.Mutable(HTML.Context(configuration))
         bodyState.value.currentIndentation = indent + indent
-        var bodyRenderCtx = Render.Context.html(state: bodyState)
+        var bodyRenderCtx = Renderer.Document.Context.html(state: bodyState)
         bodyRenderCtx.render(html.body)
         let bodyBytes = bodyState.value.bytes
 
@@ -55,7 +55,7 @@ extension HTML.__DocumentProtocol {
 
         let headState = Ownership.Mutable(HTML.Context(configuration))
         headState.value.currentIndentation = indent + indent
-        var headRenderCtx = Render.Context.html(state: headState)
+        var headRenderCtx = Renderer.Document.Context.html(state: headState)
         headRenderCtx.render(html.head)
         let headBytes = headState.value.bytes
         if headBytes.starts(with: contentIndent) {

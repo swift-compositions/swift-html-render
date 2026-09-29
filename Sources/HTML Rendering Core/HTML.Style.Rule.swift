@@ -1,4 +1,4 @@
-import Render
+import Renderer
 public import W3C_CSS_Shared
 public import WHATWG_HTML_Shared
 
@@ -50,7 +50,7 @@ extension HTML.Style.Rule {
     }
 }
 
-extension HTML.Style.Rule: Equation.`Protocol` {
+extension HTML.Style.Rule: Swift.Equatable {
     public static func == (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
         lhs.declaration == rhs.declaration
             && lhs.atRule == rhs.atRule
@@ -59,7 +59,7 @@ extension HTML.Style.Rule: Equation.`Protocol` {
     }
 }
 
-extension HTML.Style.Rule: Hash.`Protocol` {
+extension HTML.Style.Rule {
     public borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(declaration)
         hasher.combine(atRule)

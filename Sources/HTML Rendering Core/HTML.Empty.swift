@@ -1,9 +1,9 @@
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML {
 
-    public typealias Empty = Render.Empty
+    public typealias Empty = Renderer.Document.Empty
 }
 
-extension Render.Empty: HTML.View {}
+extension Renderer.Document.Empty: HTML.View {}

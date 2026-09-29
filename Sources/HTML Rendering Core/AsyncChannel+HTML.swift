@@ -1,7 +1,7 @@
 public import Async_Channel
 public import Async_Primitive
 import Ownership
-import Render
+import Renderer
 public import WHATWG_HTML_Shared
 
 extension Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Bounded {
@@ -17,7 +17,7 @@ extension Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Bounded {
         let sender = self.sender
         Task.detached {
             let state = Ownership.Mutable(HTML.Context(config))
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             context.render(view)
 
             let allBytes = state.value.bytes

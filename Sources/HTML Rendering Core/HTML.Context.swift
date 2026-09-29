@@ -1,7 +1,7 @@
 import ASCII
 public import Dictionary_Ordered
 import Dictionary
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 extension HTML {
@@ -72,8 +72,8 @@ extension HTML.Context {
 
     public static func _pushBlock(
         _ context: inout Self,
-        role: Render.Semantic.Block?,
-        style: Render.Style
+        role: Renderer.Document.Semantic.Block?,
+        style: Renderer.Document.Style
     ) {
         let tag = tagName(forBlock: role)
         let isVoid = isVoidTag(tag)
@@ -130,8 +130,8 @@ extension HTML.Context {
 
     public static func _pushInline(
         _ context: inout Self,
-        role: Render.Semantic.Inline?,
-        style: Render.Style
+        role: Renderer.Document.Semantic.Inline?,
+        style: Renderer.Document.Style
     ) {
         let tag = tagName(forInline: role)
 
@@ -160,7 +160,7 @@ extension HTML.Context {
         context.writeClosingTag(state.tag)
     }
 
-    public static func _pushList(_ context: inout Self, kind: Render.Semantic.List, start: Int?) {
+    public static func _pushList(_ context: inout Self, kind: Renderer.Document.Semantic.List, start: Int?) {
         let tag = kind == .ordered ? "ol" : "ul"
         let isPrettyPrinting = !context.configuration.newline.isEmpty
 
@@ -365,7 +365,7 @@ extension HTML.Context {
 
 extension HTML.Context {
 
-    static func tagName(forBlock role: Render.Semantic.Block?) -> String {
+    static func tagName(forBlock role: Renderer.Document.Semantic.Block?) -> String {
         switch role {
         case .heading(let level): "h\(level)"
         case .paragraph: "p"
@@ -380,7 +380,7 @@ extension HTML.Context {
         }
     }
 
-    static func tagName(forInline role: Render.Semantic.Inline?) -> String {
+    static func tagName(forInline role: Renderer.Document.Semantic.Inline?) -> String {
         switch role {
         case .emphasis: "em"
         case .strong: "strong"

@@ -1,6 +1,6 @@
 import HTML_Rendering
 import Ownership
-import Render
+import Renderer
 import Testing
 
 @testable import HTML_Rendering_Core
@@ -21,7 +21,7 @@ struct `HTML.__DocumentProtocol._render Tests` {
         }
 
         let state = Ownership.Mutable(HTML.Context(.default))
-        var renderCtx = Render.Context.html(state: state)
+        var renderCtx = Renderer.Document.Context.html(state: state)
         renderCtx.render(document)
 
         let output = String(decoding: state.value.bytes, as: UTF8.self)

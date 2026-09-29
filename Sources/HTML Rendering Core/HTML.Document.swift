@@ -1,4 +1,4 @@
-public import Render
+public import Renderer
 public import WHATWG_HTML_Shared
 
 #if canImport(SwiftUI)
@@ -9,7 +9,7 @@ extension HTML {
 
     public struct Document<Body: HTML.View, Head: HTML.View>: HTML.__DocumentProtocol {
 
-        @_implements(Render.View,Body)
+        @_implements(Renderer.Document.View,Body)
         public typealias _RenderingBody = Body
 
         #if canImport(SwiftUI) && canImport(WebKit) && (os(macOS) || os(iOS))
