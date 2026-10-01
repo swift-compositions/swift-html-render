@@ -188,7 +188,7 @@ extension `AsyncChannel Tests`.`Edge Case` {
             #expect(chunk.count <= chunkSize, "Chunk should not exceed chunk size")
 
             if chunksReceived == 3 {
-                try? await Task.sleep(for: .milliseconds(50))
+                await Task.yield()
                 producerSuspended = true
             }
 
