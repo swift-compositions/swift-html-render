@@ -7,7 +7,7 @@ public import Buffer
 public import Dictionary_Ordered
 public import Dictionary
 public import Hash_Indexed_Primitive
-import Hash_Table_Primitive
+public import Hash_Table_Primitive
 public import Ownership_Shared_Primitive
 public import WHATWG_HTML_Shared
 
