@@ -52,10 +52,8 @@ extension HTML.Style.Rule {
 
 extension HTML.Style.Rule: Swift.Equatable {
     public static func == (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
-        lhs.declaration == rhs.declaration
-            && lhs.atRule == rhs.atRule
-            && lhs.selector == rhs.selector
-            && lhs.pseudo == rhs.pseudo
+        (lhs.declaration, lhs.atRule, lhs.selector, lhs.pseudo)
+            == (rhs.declaration, rhs.atRule, rhs.selector, rhs.pseudo)
     }
 }
 
