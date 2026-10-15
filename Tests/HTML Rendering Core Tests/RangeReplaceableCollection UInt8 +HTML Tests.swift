@@ -1,21 +1,22 @@
+import Byte
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
 import HTML_Standard
 import Testing
 
 @Suite
-struct `RangeReplaceableCollection UInt8 HTML Tests` {
+struct `RangeReplaceableCollection Byte HTML Tests` {
     @Suite struct Unit {}
     @Suite struct `Edge Case` {}
     @Suite struct Integration {}
 }
 
-extension `RangeReplaceableCollection UInt8 HTML Tests`.Unit {
+extension `RangeReplaceableCollection Byte HTML Tests`.Unit {
 
     @Test
-    func `Array UInt8 renders HTML view`() {
+    func `Array Byte renders HTML view`() {
         let html = tag("div") { HTML.Text("hello") }
-        let bytes: [UInt8] = .init(html)
+        let bytes: [Byte] = .init(html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<div>"))
         #expect(string.contains("hello"))
@@ -23,9 +24,9 @@ extension `RangeReplaceableCollection UInt8 HTML Tests`.Unit {
     }
 
     @Test
-    func `ContiguousArray UInt8 renders HTML view`() {
+    func `ContiguousArray Byte renders HTML view`() {
         let html = tag("span") { HTML.Text("content") }
-        let bytes: ContiguousArray<UInt8> = .init(html)
+        let bytes: ContiguousArray<Byte> = .init(html)
         let string = String(decoding: Array(bytes), as: UTF8.self)
         #expect(string.contains("<span>"))
         #expect(string.contains("content"))
@@ -41,24 +42,24 @@ extension `RangeReplaceableCollection UInt8 HTML Tests`.Unit {
             newline: [],
             reservedCapacity: 1024
         )
-        let bytes: [UInt8] = .init(html, configuration: config)
+        let bytes: [Byte] = .init(html, configuration: config)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<div>"))
     }
 
     @Test
-    func `async Array UInt8 renders HTML view`() async {
+    func `async Array Byte renders HTML view`() async {
         let html = tag("article") { HTML.Text("async content") }
-        let bytes: [UInt8] = await .init(html)
+        let bytes: [Byte] = await .init(html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<article>"))
         #expect(string.contains("async content"))
     }
 
     @Test
-    func `async ContiguousArray UInt8 renders HTML view`() async {
+    func `async ContiguousArray Byte renders HTML view`() async {
         let html = tag("section") { HTML.Text("async section") }
-        let bytes: ContiguousArray<UInt8> = await .init(html)
+        let bytes: ContiguousArray<Byte> = await .init(html)
         let string = String(decoding: Array(bytes), as: UTF8.self)
         #expect(string.contains("<section>"))
     }
@@ -69,7 +70,7 @@ extension `RangeReplaceableCollection UInt8 HTML Tests`.Unit {
             tag("span") { HTML.Text("a") }
             tag("span") { HTML.Text("b") }
         }
-        let bytes: [UInt8] = .init(html)
+        let bytes: [Byte] = .init(html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<span>a</span>"))
         #expect(string.contains("<span>b</span>"))
@@ -81,7 +82,7 @@ extension `RangeReplaceableCollection UInt8 HTML Tests`.Unit {
         let html = items.map { item in
             tag("li") { HTML.Text(item) }
         }
-        let bytes: [UInt8] = .init(html)
+        let bytes: [Byte] = .init(html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<li>one</li>"))
         #expect(string.contains("<li>two</li>"))
@@ -91,29 +92,29 @@ extension `RangeReplaceableCollection UInt8 HTML Tests`.Unit {
     @Test
     func `renders HTML.Raw`() {
         let html = HTML.Raw("<custom-element>raw</custom-element>")
-        let bytes: [UInt8] = .init(html)
+        let bytes: [Byte] = .init(html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string == "<custom-element>raw</custom-element>")
     }
 }
 
-extension `RangeReplaceableCollection UInt8 HTML Tests`.`Edge Case` {
+extension `RangeReplaceableCollection Byte HTML Tests`.`Edge Case` {
 
     @Test
-    func `Array UInt8 renders empty HTML`() {
+    func `Array Byte renders empty HTML`() {
         let html = HTML.Empty()
-        let bytes: [UInt8] = .init(html)
+        let bytes: [Byte] = .init(html)
         #expect(bytes.isEmpty)
     }
 
     @Test
-    func `Array UInt8 renders nested HTML`() {
+    func `Array Byte renders nested HTML`() {
         let html = tag("div") {
             tag("p") {
                 HTML.Text("nested")
             }
         }
-        let bytes: [UInt8] = .init(html)
+        let bytes: [Byte] = .init(html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<div>"))
         #expect(string.contains("<p>"))
@@ -121,14 +122,14 @@ extension `RangeReplaceableCollection UInt8 HTML Tests`.`Edge Case` {
     }
 }
 
-extension `RangeReplaceableCollection UInt8 HTML Tests`.Integration {
+extension `RangeReplaceableCollection Byte HTML Tests`.Integration {
 
     @Test
-    func `Array UInt8 renders HTML document`() {
+    func `Array Byte renders HTML document`() {
         let document = HTML.Document {
             tag("h1") { HTML.Text("Title") }
         }
-        let bytes: [UInt8] = .init(document)
+        let bytes: [Byte] = .init(document)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<!doctype html>"))
         #expect(string.contains("<html>"))
@@ -137,13 +138,22 @@ extension `RangeReplaceableCollection UInt8 HTML Tests`.Integration {
     }
 
     @Test
-    func `async Array UInt8 renders HTML document`() async {
+    func `async Array Byte renders HTML document`() async {
         let document = HTML.Document {
             tag("p") { HTML.Text("Async document") }
         }
-        let bytes: [UInt8] = await .init(document)
+        let bytes: [Byte] = await .init(document)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<!doctype html>"))
         #expect(string.contains("Async document"))
+    }
+}
+
+extension `RangeReplaceableCollection Byte HTML Tests`.Integration {
+    @Test
+    func `raw rendering preserves every byte pattern`() {
+        let input = (UInt8.min...UInt8.max).map(Byte.init(bitPattern:))
+        let output = [Byte](HTML.Raw(input))
+        #expect(output == input)
     }
 }

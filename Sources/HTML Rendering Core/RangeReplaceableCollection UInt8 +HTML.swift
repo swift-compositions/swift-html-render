@@ -1,8 +1,9 @@
+public import Byte
 import Ownership
 import Renderer
 public import WHATWG_HTML_Shared
 
-extension RangeReplaceableCollection<UInt8> {
+extension RangeReplaceableCollection<Byte> {
 
     public init<View: HTML.View>(
         _ view: View,
@@ -15,7 +16,7 @@ extension RangeReplaceableCollection<UInt8> {
     }
 }
 
-extension RangeReplaceableCollection<UInt8> {
+extension RangeReplaceableCollection<Byte> {
 
     public init<View: HTML.View>(
         _ view: View,
@@ -29,7 +30,7 @@ extension RangeReplaceableCollection<UInt8> {
     }
 }
 
-extension RangeReplaceableCollection<UInt8> {
+extension RangeReplaceableCollection<Byte> {
 
     @inlinable
     public init<Document: HTML.Document.`Protocol`>(
@@ -42,7 +43,7 @@ extension RangeReplaceableCollection<UInt8> {
     }
 }
 
-extension RangeReplaceableCollection<UInt8> {
+extension RangeReplaceableCollection<Byte> {
 
     @inlinable
     public init<Document: HTML.Document.`Protocol`>(

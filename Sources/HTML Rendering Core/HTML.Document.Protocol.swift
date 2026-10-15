@@ -1,3 +1,4 @@
+public import Byte
 import Dictionary_Ordered
 import Ownership
 import Renderer
@@ -44,14 +45,14 @@ extension HTML.__DocumentProtocol {
 
         let contentIndent = indent + indent
 
-        context.bytes.append(contentsOf: [UInt8].html.tag.doctype)
+        context.bytes.append(contentsOf: [Byte].html.tag.doctype)
 
         context.bytes.append(contentsOf: newline)
-        context.bytes.append(contentsOf: [UInt8].html.tag.open)
+        context.bytes.append(contentsOf: [Byte].html.tag.open)
 
         context.bytes.append(contentsOf: newline)
         context.bytes.append(contentsOf: indent)
-        context.bytes.append(contentsOf: [UInt8].html.tag.headOpen)
+        context.bytes.append(contentsOf: [Byte].html.tag.headOpen)
 
         let headState = Ownership.Mutable(HTML.Context(configuration))
         headState.value.currentIndentation = indent + indent
@@ -72,21 +73,21 @@ extension HTML.__DocumentProtocol {
             context.bytes.append(contentsOf: newline)
             context.bytes.append(contentsOf: indent)
             context.bytes.append(contentsOf: indent)
-            context.bytes.append(contentsOf: [UInt8].html.tag.styleOpen)
+            context.bytes.append(contentsOf: [Byte].html.tag.styleOpen)
             context.bytes.append(contentsOf: stylesheetBytes)
             context.bytes.append(contentsOf: newline)
             context.bytes.append(contentsOf: indent)
             context.bytes.append(contentsOf: indent)
-            context.bytes.append(contentsOf: [UInt8].html.tag.styleClose)
+            context.bytes.append(contentsOf: [Byte].html.tag.styleClose)
         }
 
         context.bytes.append(contentsOf: newline)
         context.bytes.append(contentsOf: indent)
-        context.bytes.append(contentsOf: [UInt8].html.tag.headClose)
+        context.bytes.append(contentsOf: [Byte].html.tag.headClose)
 
         context.bytes.append(contentsOf: newline)
         context.bytes.append(contentsOf: indent)
-        context.bytes.append(contentsOf: [UInt8].html.tag.bodyOpen)
+        context.bytes.append(contentsOf: [Byte].html.tag.bodyOpen)
 
         if bodyBytes.starts(with: contentIndent) {
             context.bytes.append(contentsOf: newline)
@@ -95,10 +96,10 @@ extension HTML.__DocumentProtocol {
 
         context.bytes.append(contentsOf: newline)
         context.bytes.append(contentsOf: indent)
-        context.bytes.append(contentsOf: [UInt8].html.tag.bodyClose)
+        context.bytes.append(contentsOf: [Byte].html.tag.bodyClose)
 
         context.bytes.append(contentsOf: newline)
-        context.bytes.append(contentsOf: [UInt8].html.tag.close)
+        context.bytes.append(contentsOf: [Byte].html.tag.close)
     }
 }
 
@@ -107,8 +108,8 @@ extension HTML.__DocumentProtocol {
     @inlinable
     public func asyncDocumentBytes(
         configuration: HTML.Context.Configuration? = nil
-    ) async -> [UInt8] {
-        await [UInt8](self, configuration: configuration)
+    ) async -> [Byte] {
+        await [Byte](self, configuration: configuration)
     }
 
     @inlinable

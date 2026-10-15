@@ -94,10 +94,13 @@ let package = Package(
 
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-async-channel.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-renderer.git",
-            branch: "main", traits: ["Document"]),
+            branch: "main",
+            traits: ["Document"]
+        ),
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main", traits: ["Coder", "Parser", "Serializer"]),
         .package(url: "https://github.com/swift-standards/swift-html-standard.git", branch: "main"),
         .package(url: "https://github.com/swift-whatwg/swift-whatwg-html.git", branch: "main"),
@@ -148,6 +151,7 @@ let package = Package(
         .target(
             name: "HTML Rendering Core",
             dependencies: [
+                .product(name: "Byte", package: "swift-byte"),
                 .renderingPrimitives,
                 .ascii,
                 .w3cCSSShared,
@@ -217,6 +221,7 @@ let package = Package(
         .testTarget(
             name: "HTML Rendering Core Tests",
             dependencies: [
+                .product(name: "Byte", package: "swift-byte"),
                 .htmlRenderingCore,
                 .target(name: .htmlRendering),
                 .target(name: "HTML Rendering Core Test Support"),

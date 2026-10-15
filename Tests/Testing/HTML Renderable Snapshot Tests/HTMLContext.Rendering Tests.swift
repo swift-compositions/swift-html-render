@@ -1,3 +1,4 @@
+import Byte
 import HTML_Snapshot_Test_Support
 import Testing
 
@@ -52,8 +53,8 @@ struct `HTML.Context.Configuration Tests` {
         )
 
         #expect(config.forceImportant == true)
-        #expect(config.indentation == [.ascii.htab] as [UInt8])
-        #expect(config.newline == [.ascii.cr, .ascii.lf] as [UInt8])
+        #expect(config.indentation == [.ascii.htab] as [Byte])
+        #expect(config.newline == [.ascii.cr, .ascii.lf] as [Byte])
         #expect(config.reservedCapacity == 8192)
     }
 

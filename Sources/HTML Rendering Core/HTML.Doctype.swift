@@ -1,3 +1,4 @@
+import Byte
 import Renderer
 public import WHATWG_HTML_Shared
 
@@ -12,6 +13,6 @@ extension HTML {
 extension HTML.Doctype {
 
     public var body: some HTML.View {
-        HTML.Raw([UInt8].html.tag.doctype)
+        HTML.Raw([Byte].html.tag.doctype)
     }
 }

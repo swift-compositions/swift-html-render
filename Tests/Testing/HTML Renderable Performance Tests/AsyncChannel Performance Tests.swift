@@ -1,3 +1,4 @@
+import Byte
 import HTML_Snapshot_Test_Support
 import Testing
 
@@ -35,7 +36,7 @@ extension `Performance Tests` {
             var chunkCount = 0
             let startTime = ContinuousClock.now
 
-            var channel = Async.Channel<ArraySlice<UInt8>>.Bounded { html }
+            var channel = Async.Channel<ArraySlice<Byte>>.Bounded { html }
             for try await chunk in channel.receiver.elements {
                 if chunkCount == 0 {
                     print("Time3: \(ContinuousClock.now)")

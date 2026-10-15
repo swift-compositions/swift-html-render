@@ -1,17 +1,18 @@
+import Byte
 import HTML_Snapshot_Test_Support
 import Testing
 
 @testable import HTML_Rendering_Core
 
 @Suite
-struct `[UInt8] Tests` {
+struct `[Byte] Tests` {
 
     @Test
-    func `[UInt8] init from HTML`() throws {
+    func `[Byte] init from HTML`() throws {
         let html = tag("div") {
             HTML.Text("Hello")
         }
-        let bytes = [UInt8](html)
+        let bytes = [Byte](html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<div>"))
         #expect(string.contains("Hello"))
@@ -19,14 +20,14 @@ struct `[UInt8] Tests` {
     }
 
     @Test
-    func `[UInt8] init from empty HTML`() throws {
+    func `[Byte] init from empty HTML`() throws {
         let html = HTML.Empty()
-        let bytes = [UInt8](html)
+        let bytes = [Byte](html)
         #expect(bytes.isEmpty)
     }
 
     @Test
-    func `[UInt8] init from complex HTML`() throws {
+    func `[Byte] init from complex HTML`() throws {
         let html = HTML.Group {
             tag("div") {
                 tag("h1") {
@@ -37,7 +38,7 @@ struct `[UInt8] Tests` {
                 }
             }
         }
-        let bytes = [UInt8](html)
+        let bytes = [Byte](html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("&amp;"))
         #expect(string.contains("&lt;"))
@@ -45,70 +46,70 @@ struct `[UInt8] Tests` {
     }
 
     @Test
-    func `[UInt8] async init from HTML`() async {
+    func `[Byte] async init from HTML`() async {
         let html = tag("span") {
             HTML.Text("Async content")
         }
-        let bytes = await [UInt8](html)
+        let bytes = await [Byte](html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<span>"))
         #expect(string.contains("Async content"))
     }
 
     @Test
-    func `[UInt8] async init with configuration`() async {
+    func `[Byte] async init with configuration`() async {
         let html = tag("div") {
             HTML.Text("Configured")
         }
-        let bytes = await [UInt8](html, configuration: .pretty)
+        let bytes = await [Byte](html, configuration: .pretty)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<div>"))
     }
 
     @Test
-    func `[UInt8] async init from document`() async {
+    func `[Byte] async init from document`() async {
         let document = HTML.Document {
             tag("p") {
                 HTML.Text("Document content")
             }
         }
-        let bytes = await [UInt8](document)
+        let bytes = await [Byte](document)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<!doctype html>"))
         #expect(string.contains("Document content"))
     }
 
     @Test
-    func `[UInt8] htmlEntityQuot`() {
-        let entity = [UInt8].html.doubleQuotationMark
+    func `[Byte] htmlEntityQuot`() {
+        let entity = [Byte].html.doubleQuotationMark
         let string = String(decoding: entity, as: UTF8.self)
         #expect(string == "&quot;")
     }
 
     @Test
-    func `[UInt8] htmlEntityApos`() {
-        let entity = [UInt8].html.apostrophe
+    func `[Byte] htmlEntityApos`() {
+        let entity = [Byte].html.apostrophe
         let string = String(decoding: entity, as: UTF8.self)
         #expect(string == "&#39;")
     }
 
     @Test
-    func `[UInt8] htmlEntityAmp`() {
-        let entity = [UInt8].html.ampersand
+    func `[Byte] htmlEntityAmp`() {
+        let entity = [Byte].html.ampersand
         let string = String(decoding: entity, as: UTF8.self)
         #expect(string == "&amp;")
     }
 
     @Test
-    func `[UInt8] htmlEntityLt`() {
-        let entity = [UInt8].html.lessThan
+    func `[Byte] htmlEntityLt`() {
+        let entity = [Byte].html.lessThan
         let string = String(decoding: entity, as: UTF8.self)
         #expect(string == "&lt;")
     }
 
     @Test
-    func `[UInt8] htmlEntityGt`() {
-        let entity = [UInt8].html.greaterThan
+    func `[Byte] htmlEntityGt`() {
+        let entity = [Byte].html.greaterThan
         let string = String(decoding: entity, as: UTF8.self)
         #expect(string == "&gt;")
     }
@@ -118,7 +119,7 @@ struct `[UInt8] Tests` {
         let html = tag("article") {
             HTML.Text("Async bytes content")
         }
-        let bytes = await [UInt8](html)
+        let bytes = await [Byte](html)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<article>"))
         #expect(string.contains("Async bytes content"))
@@ -129,7 +130,7 @@ struct `[UInt8] Tests` {
         let html = tag("section") {
             HTML.Text("Configured bytes")
         }
-        let bytes = await [UInt8](html, configuration: .pretty)
+        let bytes = await [Byte](html, configuration: .pretty)
         let string = String(decoding: bytes, as: UTF8.self)
         #expect(string.contains("<section>"))
     }
@@ -137,9 +138,9 @@ struct `[UInt8] Tests` {
 
 extension `Snapshot Tests` {
     @Suite
-    struct `UInt8 Array Snapshot Tests` {
+    struct `Byte Array Snapshot Tests` {
         @Test
-        func `[UInt8] document rendering snapshot`() {
+        func `[Byte] document rendering snapshot`() {
             snapshot(as: .html) {
                 HTML.Document {
                     tag("main") {
@@ -147,7 +148,7 @@ extension `Snapshot Tests` {
                             HTML.Text("Byte Array Test")
                         }
                         tag("p") {
-                            HTML.Text("Testing [UInt8] rendering path")
+                            HTML.Text("Testing [Byte] rendering path")
                         }
                     }
                 }
@@ -161,7 +162,7 @@ extension `Snapshot Tests` {
                     <main>
                       <h1>Byte Array Test
                       </h1>
-                      <p>Testing [UInt8] rendering path
+                      <p>Testing [Byte] rendering path
                       </p>
                     </main>
                   </body>

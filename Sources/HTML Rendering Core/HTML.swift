@@ -1,8 +1,9 @@
+public import Byte
 public import WHATWG_HTML_Shared
 
 extension HTML {
 
-    public static let doubleQuotationMark: [UInt8] = [
+    public static let doubleQuotationMark: [Byte] = [
         .ascii.ampersand,
         .ascii.q,
         .ascii.u,
@@ -11,7 +12,7 @@ extension HTML {
         .ascii.semicolon,
     ]
 
-    public static let apostrophe: [UInt8] = [
+    public static let apostrophe: [Byte] = [
         .ascii.ampersand,
         .ascii.numberSign,
         .ascii.3,
@@ -19,7 +20,7 @@ extension HTML {
         .ascii.semicolon,
     ]
 
-    public static let ampersand: [UInt8] = [
+    public static let ampersand: [Byte] = [
         .ascii.ampersand,
         .ascii.a,
         .ascii.m,
@@ -27,14 +28,14 @@ extension HTML {
         .ascii.semicolon,
     ]
 
-    public static let lessThan: [UInt8] = [
+    public static let lessThan: [Byte] = [
         .ascii.ampersand,
         .ascii.l,
         .ascii.t,
         .ascii.semicolon,
     ]
 
-    public static let greaterThan: [UInt8] = [
+    public static let greaterThan: [Byte] = [
         .ascii.ampersand,
         .ascii.g,
         .ascii.t,

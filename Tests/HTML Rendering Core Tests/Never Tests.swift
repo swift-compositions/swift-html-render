@@ -1,3 +1,4 @@
+import Byte
 import Testing
 
 @testable import HTML_Rendering_Core
@@ -29,7 +30,7 @@ extension NeverHTMLTests.Unit {
                 _ view: borrowing Self,
                 context: inout Renderer.Document.Context
             ) {
-                context.write(raw: Array("Custom".utf8))
+                context.write(raw: [Byte](utf8: "Custom"))
             }
         }
 

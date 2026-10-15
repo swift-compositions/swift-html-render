@@ -1,4 +1,5 @@
 import Async_Channel
+import Byte
 import HTML_Rendering
 import HTML_Standard
 import Renderer
@@ -25,8 +26,8 @@ extension `AsyncChannel Tests`.Unit {
             }
         }
 
-        var chunks: [ArraySlice<UInt8>] = []
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded { TestHTML() }
+        var chunks: [ArraySlice<Byte>] = []
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded { TestHTML() }
         for try await chunk in channel.receiver.elements {
             chunks.append(chunk)
         }
@@ -48,8 +49,8 @@ extension `AsyncChannel Tests`.Unit {
             }
         }
 
-        var allBytes: [UInt8] = []
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded { MultiParagraphHTML() }
+        var allBytes: [Byte] = []
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded { MultiParagraphHTML() }
         for try await chunk in channel.receiver.elements {
             allBytes.append(contentsOf: chunk)
         }
@@ -70,8 +71,8 @@ extension `AsyncChannel Tests`.Unit {
             }
         }
 
-        var chunks: [ArraySlice<UInt8>] = []
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded(chunkSize: 100) { LongContentHTML() }
+        var chunks: [ArraySlice<Byte>] = []
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(chunkSize: 100) { LongContentHTML() }
         for try await chunk in channel.receiver.elements {
             chunks.append(chunk)
             #expect(chunk.count <= 100)
@@ -91,7 +92,7 @@ extension `AsyncChannel Tests`.Unit {
         }
 
         var chunkCount = 0
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded { SimpleHTML() }
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded { SimpleHTML() }
         for try await _ in channel.receiver.elements {
             chunkCount += 1
         }
@@ -110,8 +111,8 @@ extension `AsyncChannel Tests`.Unit {
             }
         }
 
-        var allBytes: [UInt8] = []
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded(
+        var allBytes: [Byte] = []
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(
             chunkSize: 4096,
             configuration: .email
         ) { StyledHTML() }
@@ -134,9 +135,8 @@ extension `AsyncChannel Tests`.Unit {
             }
         }
 
-        var allBytes: [UInt8] = []
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded(chunkSize: 4096, configuration: nil)
-        { SpanHTML() }
+        var allBytes: [Byte] = []
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(chunkSize: 4096, configuration: nil) { SpanHTML() }
         for try await chunk in channel.receiver.elements {
             allBytes.append(contentsOf: chunk)
         }
@@ -156,8 +156,8 @@ extension `AsyncChannel Tests`.`Edge Case` {
             }
         }
 
-        var allBytes: [UInt8] = []
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded { EmptyHTML() }
+        var allBytes: [Byte] = []
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded { EmptyHTML() }
         for try await chunk in channel.receiver.elements {
             allBytes.append(contentsOf: chunk)
         }
@@ -179,7 +179,7 @@ extension `AsyncChannel Tests`.`Edge Case` {
         var chunksReceived = 0
         var producerSuspended = false
 
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded(chunkSize: chunkSize) {
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(chunkSize: chunkSize) {
             StreamingHTML()
         }
 
@@ -216,7 +216,7 @@ extension `AsyncChannel Tests`.`Edge Case` {
         var totalBytes = 0
         var chunkCount = 0
 
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded(chunkSize: chunkSize) {
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(chunkSize: chunkSize) {
             VeryLargeHTML()
         }
         for try await chunk in channel.receiver.elements {
@@ -253,7 +253,7 @@ extension `AsyncChannel Tests`.`Edge Case` {
         var timestamps: [ContinuousClock.Instant] = []
         let startTime = ContinuousClock.now
 
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded(chunkSize: 100) { ProgressiveHTML() }
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(chunkSize: 100) { ProgressiveHTML() }
         for try await _ in channel.receiver.elements {
             timestamps.append(ContinuousClock.now)
         }
@@ -280,8 +280,8 @@ extension `AsyncChannel Tests`.Integration {
             }
         }
 
-        var allBytes: [UInt8] = []
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded { NestedHTML() }
+        var allBytes: [Byte] = []
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded { NestedHTML() }
         for try await chunk in channel.receiver.elements {
             allBytes.append(contentsOf: chunk)
         }
@@ -326,7 +326,7 @@ extension `AsyncChannel Tests`.Integration {
 
         var chunkCount = 0
 
-        let channel = Async.Channel<ArraySlice<UInt8>>.Bounded(chunkSize: 1000) {
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(chunkSize: 1000) {
             LargeContentHTML()
         }
         await state.markProducerStarted()
@@ -346,5 +346,19 @@ extension `AsyncChannel Tests`.Integration {
         let result = await state.getResult()
         #expect(result.started, "Producer should have started")
         #expect(chunkCount >= 5, "Should have received multiple chunks")
+    }
+}
+
+extension `AsyncChannel Tests`.Integration {
+    @Test
+    func `single byte chunks preserve raw content`() async throws {
+        let input = (UInt8.min...UInt8.max).map(Byte.init(bitPattern:))
+        let channel = Async.Channel<ArraySlice<Byte>>.Bounded(chunkSize: 1) { HTML.Raw(input) }
+        var output: [Byte] = []
+        for try await chunk in channel.receiver.elements {
+            #expect(chunk.count == 1)
+            output.append(contentsOf: chunk)
+        }
+        #expect(output == input)
     }
 }

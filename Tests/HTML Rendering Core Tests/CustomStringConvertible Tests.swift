@@ -1,3 +1,4 @@
+import Byte
 import HTML_Rendering
 import HTML_Standard
 import Testing
@@ -42,7 +43,7 @@ extension `CustomStringConvertible Tests`.Unit {
 
         let html = TestHTML()
         let description = html.description
-        let fromBytes = String(decoding: [UInt8](html), as: UTF8.self)
+        let fromBytes = String(decoding: [Byte](html), as: UTF8.self)
 
         #expect(description == fromBytes)
     }

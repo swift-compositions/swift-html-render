@@ -1,3 +1,4 @@
+import Byte
 import Renderer
 public import WHATWG_HTML_Shared
 
@@ -7,8 +8,8 @@ extension StringProtocol {
         _ html: some HTML.View,
         configuration: HTML.Context.Configuration? = nil
     ) throws(HTML.Context.Configuration.Error) {
-        let bytes = ContiguousArray(html, configuration: configuration)
-        self = Self(decoding: bytes, as: UTF8.self)
+        let bytes = ContiguousArray<Byte>(html, configuration: configuration)
+        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
     }
 }
 
@@ -19,8 +20,8 @@ extension StringProtocol {
         _ view: T,
         configuration: HTML.Context.Configuration? = nil
     ) async {
-        let bytes = await [UInt8](view, configuration: configuration)
-        self = Self(decoding: bytes, as: UTF8.self)
+        let bytes = await [Byte](view, configuration: configuration)
+        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
     }
 }
 
@@ -30,8 +31,8 @@ extension StringProtocol {
         _ document: some HTML.Document.`Protocol`,
         configuration: HTML.Context.Configuration? = nil
     ) throws(HTML.Context.Configuration.Error) {
-        let bytes = ContiguousArray<UInt8>(document, configuration: configuration)
-        self = Self(decoding: bytes, as: UTF8.self)
+        let bytes = ContiguousArray<Byte>(document, configuration: configuration)
+        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
     }
 }
 
@@ -42,7 +43,7 @@ extension StringProtocol {
         _ document: T,
         configuration: HTML.Context.Configuration? = nil
     ) async {
-        let bytes = await [UInt8](document, configuration: configuration)
-        self = Self(decoding: bytes, as: UTF8.self)
+        let bytes = await [Byte](document, configuration: configuration)
+        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
     }
 }

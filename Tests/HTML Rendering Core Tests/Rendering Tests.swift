@@ -1,5 +1,5 @@
 import ASCII
-import Foundation
+import Byte
 import HTML_Rendering
 import HTML_Standard
 import Renderer
@@ -224,9 +224,9 @@ extension `Rendering Tests`.Integration {
             }
         }
 
-        HTML.Context.Configuration.$current.withValue(.default) {
-            let bytes = ContiguousArray(element)
-            let rendered = String(data: Data(bytes), encoding: .utf8) ?? ""
+        try HTML.Context.Configuration.$current.withValue(.default) {
+            let bytes = ContiguousArray<Byte>(element)
+            let rendered = try #require(String(validating: bytes, as: UTF8.self))
 
             #expect(rendered.contains("<div>"))
             #expect(rendered.contains("<p>"))

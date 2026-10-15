@@ -1,3 +1,4 @@
+import Byte
 import HTML_Rendering
 import HTML_Standard
 import Testing
@@ -30,7 +31,7 @@ extension `Async Tests`.Unit {
             tag("title") { HTML.Text("Title") }
         }
         let syncResult = {
-            String(decoding: [UInt8](html, configuration: .pretty), as: UTF8.self)
+            String(decoding: [Byte](html, configuration: .pretty), as: UTF8.self)
         }()
         let asyncResult = await String(html, configuration: .pretty)
 
@@ -41,8 +42,8 @@ extension `Async Tests`.Unit {
     @Test
     func `async bytes matches sync bytes`() async {
         let html = tag("p") { HTML.Text("Test content") }
-        let syncBytes = { [UInt8](html) }()
-        let asyncBytes = await [UInt8](html)
+        let syncBytes = { [Byte](html) }()
+        let asyncBytes = await [Byte](html)
 
         #expect(syncBytes == asyncBytes)
     }
@@ -60,7 +61,7 @@ extension `Async Tests`.Unit {
         }
 
         let html = TestHTML()
-        let bytes = [UInt8](html)
+        let bytes = [Byte](html)
         let result = String(decoding: bytes, as: UTF8.self)
 
         for i in 1...5 {
@@ -134,7 +135,7 @@ extension `Async Tests`.`Edge Case` {
         }
 
         let html = EmptyHTML()
-        let result = await [UInt8](html)
+        let result = await [Byte](html)
 
         #expect(result.isEmpty)
     }
@@ -210,7 +211,7 @@ extension `Async Tests`.Integration {
             StyledMainHTML()
         }
 
-        let bytes = [UInt8](document)
+        let bytes = [Byte](document)
         let result = String(decoding: bytes, as: UTF8.self)
 
         #expect(result.contains("<!doctype html>"))

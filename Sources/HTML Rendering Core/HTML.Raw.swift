@@ -1,4 +1,5 @@
 import ASCII
+public import Byte
 public import Renderer
 public import WHATWG_HTML_Shared
 
@@ -6,13 +7,13 @@ extension HTML {
 
     public struct Raw: HTML.View, Sendable {
 
-        public let bytes: [UInt8]
+        public let bytes: [Byte]
 
         public init(_ string: String) {
-            self.bytes = Array(string.utf8)
+            self.bytes = [Byte](utf8: string)
         }
 
-        public init(_ bytes: [UInt8]) {
+        public init(_ bytes: [Byte]) {
             self.bytes = bytes
         }
     }

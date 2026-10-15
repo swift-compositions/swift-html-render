@@ -1,4 +1,5 @@
 import ASCII
+public import Byte
 import Renderer
 public import WHATWG_HTML_Shared
 
@@ -8,16 +9,16 @@ extension HTML.Context {
 
         public let forceImportant: Bool
 
-        public let indentation: [UInt8]
+        public let indentation: [Byte]
 
-        public let newline: [UInt8]
+        public let newline: [Byte]
 
         public let reservedCapacity: Int
 
         public init(
             forceImportant: Bool,
-            indentation: [UInt8],
-            newline: [UInt8],
+            indentation: [Byte],
+            newline: [Byte],
             reservedCapacity: Int
         ) {
             self.forceImportant = forceImportant

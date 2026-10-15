@@ -1,17 +1,18 @@
 public import Async_Channel
 public import Async_Primitive
+public import Byte
 import Ownership
 import Renderer
 public import WHATWG_HTML_Shared
 
-extension Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Bounded {
+extension Async_Primitive.Async.Channel<ArraySlice<Byte>>.Bounded {
 
     public init<View: HTML.View & Sendable>(
         chunkSize: Int = 4096,
         configuration: HTML.Context.Configuration? = nil,
         @HTML.Builder _ view: () -> View
     ) {
-        self.init(capacity: Index<ArraySlice<UInt8>>.Count(UInt(1)))
+        self.init(capacity: Index<ArraySlice<Byte>>.Count(UInt(1)))
         let view = view()
         let config = configuration ?? .current
         let sender = self.sender
@@ -24,7 +25,7 @@ extension Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Bounded {
             var offset = 0
             while offset < allBytes.count {
                 let end = min(offset + chunkSize, allBytes.count)
-                do throws(Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Error) {
+                do throws(Async_Primitive.Async.Channel<ArraySlice<Byte>>.Error) {
                     try await sender.send(ArraySlice(allBytes[offset..<end]))
                 } catch {
 
@@ -36,14 +37,14 @@ extension Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Bounded {
     }
 }
 
-extension Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Bounded {
+extension Async_Primitive.Async.Channel<ArraySlice<Byte>>.Bounded {
 
     public init<Document: HTML.Document.`Protocol` & Sendable>(
         chunkSize: Int = 4096,
         configuration: HTML.Context.Configuration? = nil,
         @HTML.Builder _ document: () -> Document
     ) {
-        self.init(capacity: Index<ArraySlice<UInt8>>.Count(UInt(1)))
+        self.init(capacity: Index<ArraySlice<Byte>>.Count(UInt(1)))
         let document = document()
         let config = configuration ?? .current
         let sender = self.sender
@@ -54,7 +55,7 @@ extension Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Bounded {
             var offset = 0
             while offset < allBytes.count {
                 let end = min(offset + chunkSize, allBytes.count)
-                do throws(Async_Primitive.Async.Channel<ArraySlice<UInt8>>.Error) {
+                do throws(Async_Primitive.Async.Channel<ArraySlice<Byte>>.Error) {
                     try await sender.send(ArraySlice(allBytes[offset..<end]))
                 } catch {
 

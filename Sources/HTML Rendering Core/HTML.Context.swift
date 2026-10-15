@@ -1,6 +1,7 @@
 import ASCII
-public import Dictionary_Ordered
+public import Byte
 import Dictionary
+public import Dictionary_Ordered
 public import Renderer
 public import WHATWG_HTML_Shared
 
@@ -8,7 +9,7 @@ extension HTML {
 
     public struct Context: Sendable {
 
-        public var bytes: ContiguousArray<UInt8>
+        public var bytes: ContiguousArray<Byte>
 
         public var attributes: Attributes
 
@@ -16,7 +17,7 @@ extension HTML {
 
         public let configuration: Configuration
 
-        public var currentIndentation: [UInt8]
+        public var currentIndentation: [Byte]
 
         private var styleCounter: Int
 
@@ -32,14 +33,14 @@ extension HTML.Context {
         let isBlock: Bool
         let isPreElement: Bool
         let savedAttributes: HTML.Context.Attributes
-        let savedIndentation: [UInt8]
+        let savedIndentation: [Byte]
     }
 }
 
 extension HTML.Context {
 
     public init(_ configuration: Configuration = .current) {
-        self.bytes = ContiguousArray<UInt8>()
+        self.bytes = ContiguousArray<Byte>()
         self.attributes = Self.Attributes()
         self.styles = Self.Styles()
         self.configuration = configuration
@@ -53,16 +54,16 @@ extension HTML.Context {
 extension HTML.Context {
     public mutating func text(_ content: borrowing String) {
         let copy = copy content
-        for byte in copy.utf8 {
+        for byte in copy.utf8.lazy.map(Byte.init(bitPattern:)) {
             switch byte {
             case .ascii.ampersand:
-                bytes.append(contentsOf: [UInt8].html.ampersand)
+                bytes.append(contentsOf: [Byte].html.ampersand)
 
             case .ascii.lessThanSign:
-                bytes.append(contentsOf: [UInt8].html.lessThan)
+                bytes.append(contentsOf: [Byte].html.lessThan)
 
             case .ascii.greaterThanSign:
-                bytes.append(contentsOf: [UInt8].html.greaterThan)
+                bytes.append(contentsOf: [Byte].html.greaterThan)
 
             default:
                 bytes.append(byte)
@@ -241,7 +242,7 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<br>".utf8)
+        bytes.append(contentsOf: "<br>".utf8.lazy.map(Byte.init(bitPattern:)))
     }
 
     public mutating func thematicBreak() {
@@ -252,7 +253,7 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<hr>".utf8)
+        bytes.append(contentsOf: "<hr>".utf8.lazy.map(Byte.init(bitPattern:)))
     }
 
     public mutating func image(source: String, alt: String) {
@@ -263,18 +264,18 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<img src=\"".utf8)
+        bytes.append(contentsOf: "<img src=\"".utf8.lazy.map(Byte.init(bitPattern:)))
         escapeAttributeValue(source)
-        bytes.append(contentsOf: "\" alt=\"".utf8)
+        bytes.append(contentsOf: "\" alt=\"".utf8.lazy.map(Byte.init(bitPattern:)))
         escapeAttributeValue(alt)
-        bytes.append(contentsOf: "\">".utf8)
+        bytes.append(contentsOf: "\">".utf8.lazy.map(Byte.init(bitPattern:)))
     }
 
     public static func _pushLink(_ context: inout Self, destination: borrowing String) {
         let copy = copy destination
-        context.bytes.append(contentsOf: "<a href=\"".utf8)
+        context.bytes.append(contentsOf: "<a href=\"".utf8.lazy.map(Byte.init(bitPattern:)))
         context.escapeAttributeValue(copy)
-        context.bytes.append(contentsOf: "\">".utf8)
+        context.bytes.append(contentsOf: "\">".utf8.lazy.map(Byte.init(bitPattern:)))
 
         let savedAttributes = context.attributes
         let savedIndentation = context.currentIndentation
@@ -307,7 +308,7 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<div style=\"page-break-after:always\"></div>".utf8)
+        bytes.append(contentsOf: "<div style=\"page-break-after:always\"></div>".utf8.lazy.map(Byte.init(bitPattern:)))
     }
 }
 
@@ -315,12 +316,12 @@ extension HTML.Context {
 
     mutating func writeOpeningTag(_ tag: String) {
         bytes.append(.ascii.lessThanSign)
-        bytes.append(contentsOf: tag.utf8)
+        bytes.append(contentsOf: tag.utf8.lazy.map(Byte.init(bitPattern:)))
 
         let currentAttributes = attributes
         currentAttributes.forEach { name, value in
             bytes.append(.ascii.space)
-            bytes.append(contentsOf: name.utf8)
+            bytes.append(contentsOf: name.utf8.lazy.map(Byte.init(bitPattern:)))
             if !value.isEmpty {
                 bytes.append(.ascii.equalsSign)
                 bytes.append(.ascii.dquote)
@@ -334,27 +335,27 @@ extension HTML.Context {
     mutating func writeClosingTag(_ tag: String) {
         bytes.append(.ascii.lessThanSign)
         bytes.append(.ascii.slant)
-        bytes.append(contentsOf: tag.utf8)
+        bytes.append(contentsOf: tag.utf8.lazy.map(Byte.init(bitPattern:)))
         bytes.append(.ascii.greaterThanSign)
     }
 
     mutating func escapeAttributeValue(_ value: String) {
-        for byte in value.utf8 {
+        for byte in value.utf8.lazy.map(Byte.init(bitPattern:)) {
             switch byte {
             case .ascii.dquote:
-                bytes.append(contentsOf: [UInt8].html.doubleQuotationMark)
+                bytes.append(contentsOf: [Byte].html.doubleQuotationMark)
 
             case .ascii.apostrophe:
-                bytes.append(contentsOf: [UInt8].html.apostrophe)
+                bytes.append(contentsOf: [Byte].html.apostrophe)
 
             case .ascii.ampersand:
-                bytes.append(contentsOf: [UInt8].html.ampersand)
+                bytes.append(contentsOf: [Byte].html.ampersand)
 
             case .ascii.lessThanSign:
-                bytes.append(contentsOf: [UInt8].html.lessThan)
+                bytes.append(contentsOf: [Byte].html.lessThan)
 
             case .ascii.greaterThanSign:
-                bytes.append(contentsOf: [UInt8].html.greaterThan)
+                bytes.append(contentsOf: [Byte].html.greaterThan)
 
             default:
                 bytes.append(byte)
@@ -434,7 +435,7 @@ extension HTML.Context {
         context.attributes = state.savedAttributes
     }
 
-    public mutating func write(raw bytes: [UInt8]) {
+    public mutating func write(raw bytes: [Byte]) {
         self.bytes.append(contentsOf: bytes)
     }
 
@@ -541,7 +542,7 @@ extension HTML.Context {
 
 extension HTML.Context {
 
-    public func stylesheetBytes(baseIndentation: [UInt8] = []) -> ContiguousArray<UInt8> {
+    public func stylesheetBytes(baseIndentation: [Byte] = []) -> ContiguousArray<Byte> {
 
         var grouped: [HTML.AtRule?: [(style: HTML.Style.Rule, className: String)]] = [:]
         var groupOrder: [HTML.AtRule?] = []
@@ -552,7 +553,7 @@ extension HTML.Context {
             grouped[style.atRule, default: []].append((style, className))
         }
 
-        var sheet = ContiguousArray<UInt8>()
+        var sheet = ContiguousArray<Byte>()
         let sortedGroups =
             groupOrder
             .map { (key: $0, value: grouped[$0]!) }
@@ -562,7 +563,7 @@ extension HTML.Context {
             if let atRule {
                 sheet.append(contentsOf: configuration.newline)
                 sheet.append(contentsOf: baseIndentation)
-                sheet.append(contentsOf: atRule.rawValue.utf8)
+                sheet.append(contentsOf: atRule.rawValue.utf8.lazy.map(Byte.init(bitPattern:)))
                 sheet.append(.ascii.leftBrace)
             }
 
@@ -583,9 +584,9 @@ extension HTML.Context {
                 if atRule != nil {
                     sheet.append(contentsOf: configuration.indentation)
                 }
-                sheet.append(contentsOf: selector.utf8)
+                sheet.append(contentsOf: selector.utf8.lazy.map(Byte.init(bitPattern:)))
                 sheet.append(.ascii.leftBrace)
-                sheet.append(contentsOf: style.declaration.utf8)
+                sheet.append(contentsOf: style.declaration.utf8.lazy.map(Byte.init(bitPattern:)))
                 if configuration.forceImportant {
                     sheet.append(
                         contentsOf: [.ascii.space] + .html.important
@@ -603,7 +604,7 @@ extension HTML.Context {
         return sheet
     }
 
-    public var stylesheetBytes: ContiguousArray<UInt8> {
+    public var stylesheetBytes: ContiguousArray<Byte> {
         stylesheetBytes(baseIndentation: [])
     }
 
@@ -613,7 +614,7 @@ extension HTML.Context {
 }
 
 extension HTML {
-    static let important: [UInt8] = [
+    static let important: [Byte] = [
         .ascii.exclamationPoint,
         .ascii.i,
         .ascii.m,
