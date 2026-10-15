@@ -146,7 +146,7 @@ let package = Package(
     targets: [
 
         .target(
-            name: .htmlRenderingCore,
+            name: "HTML Rendering Core",
             dependencies: [
                 .renderingPrimitives,
                 .ascii,
@@ -215,7 +215,7 @@ let package = Package(
         ),
 
         .testTarget(
-            name: .htmlRenderingCore.tests,
+            name: "HTML Rendering Core Tests",
             dependencies: [
                 .htmlRenderingCore,
                 .target(name: .htmlRendering),
