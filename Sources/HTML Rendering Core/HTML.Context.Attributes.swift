@@ -1,14 +1,13 @@
-public import Buffer_Linear_Primitive
-public import Memory
-public import Memory_Allocator
-public import Storage
 public import Buffer
-
-public import Dictionary_Ordered
+public import Buffer_Linear_Primitive
 public import Dictionary
+public import Dictionary_Ordered
 public import Hash_Indexed_Primitive
 public import Hash_Table_Primitive
+public import Memory
+public import Memory_Allocator
 public import Ownership_Shared_Primitive
+public import Storage
 public import WHATWG_HTML_Shared
 
 extension HTML.Context {

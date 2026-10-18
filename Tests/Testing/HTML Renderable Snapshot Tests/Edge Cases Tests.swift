@@ -63,13 +63,12 @@ struct `Edge Cases Tests` {
     @Test
     func `Many nested elements`() throws {
         func nest(_ depth: Int, content: () -> some HTML.View) -> HTML.AnyView {
-            if depth == 0 {
-                let c = content()
-                return .init(c)
-            } else {
+            guard depth == 0 else {
                 let nested = tag("div") { nest(depth - 1, content: content) }
                 return .init(nested)
             }
+            let c = content()
+            return .init(c)
         }
 
         let html = nest(50) { HTML.Text("Deep content") }

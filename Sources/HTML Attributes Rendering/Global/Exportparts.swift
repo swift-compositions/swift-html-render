@@ -22,11 +22,10 @@ extension HTML.View {
         _ mappings: [HTML.Exportparts.Attribute.PartMapping]
     ) -> HTML._Attributes<Self> {
         let value = mappings.map { mapping in
-            if mapping.originalName == mapping.exposedName {
-                return mapping.originalName
-            } else {
+            guard mapping.originalName == mapping.exposedName else {
                 return "\(mapping.originalName):\(mapping.exposedName)"
             }
+            return mapping.originalName
         }.joined(separator: ", ")
 
         return self.attribute(HTML.Exportparts.Attribute.attribute, value)
