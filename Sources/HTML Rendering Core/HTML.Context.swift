@@ -556,7 +556,7 @@ extension HTML.Context {
         var sheet = ContiguousArray<Byte>()
         let sortedGroups =
             groupOrder
-            .map { (key: $0, value: grouped[$0]!) }
+            .compactMap { key in grouped[key].map { (key: key, value: $0) } }
             .sorted(by: { $0.key == nil ? $1.key != nil : false })
 
         for (atRule, stylesForAtRule) in sortedGroups {
