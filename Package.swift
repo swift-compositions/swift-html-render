@@ -2,77 +2,6 @@
 
 import PackageDescription
 
-extension String {
-    static let htmlRenderingCore: Self = "HTML Rendering Core"
-    static let htmlAttributesRendering: Self = "HTML Attributes Rendering"
-    static let htmlElementsRendering: Self = "HTML Elements Rendering"
-    static let htmlRendering: Self = "HTML Rendering"
-
-    var tests: Self { self + " Tests" }
-}
-
-extension Target.Dependency {
-    static var htmlRenderingCore: Self { .target(name: .htmlRenderingCore) }
-    static var htmlAttributesRendering: Self { .target(name: .htmlAttributesRendering) }
-    static var htmlElementsRendering: Self { .target(name: .htmlElementsRendering) }
-    static var htmlRenderingCoreTestSupport: Self {
-        .target(name: "HTML Rendering Core Test Support")
-    }
-}
-
-extension Target.Dependency {
-    static var renderingPrimitives: Self {
-        .product(name: "Renderer", package: "swift-renderer")
-    }
-    static var ascii: Self {
-        .product(name: "ASCII", package: "swift-ascii")
-    }
-    static var htmlStandard: Self {
-        .product(name: "HTML Standard", package: "swift-html-standard")
-    }
-    static var htmlStandardAttributes: Self {
-        .product(name: "HTML Standard Attributes", package: "swift-html-standard")
-    }
-    static var htmlStandardElements: Self {
-        .product(name: "HTML Standard Elements", package: "swift-html-standard")
-    }
-    static var htmlStandardTestSupport: Self {
-        .product(name: "HTML Standard Test Support", package: "swift-html-standard")
-    }
-    static var whatwgHTMLShared: Self {
-        .product(name: "WHATWG HTML Shared", package: "swift-whatwg-html")
-    }
-
-    static var w3cCSSShared: Self {
-        .product(name: "W3C CSS Shared", package: "swift-w3c-css")
-    }
-    static var dictionaryPrimitives: Self {
-        .product(name: "Dictionary", package: "swift-dictionary")
-    }
-    static var sharedPrimitive: Self {
-        .product(name: "Ownership Shared Primitive", package: "swift-ownership-shared")
-    }
-    static var hashIndexedPrimitive: Self {
-        .product(name: "Hash Indexed Primitive", package: "swift-hash-table")
-    }
-
-    static var hashTablePrimitive: Self {
-        .product(name: "Hash Table Primitive", package: "swift-hash-table")
-    }
-    static var bufferLinearPrimitive: Self {
-        .product(name: "Buffer Linear Primitive", package: "swift-buffer-linear")
-    }
-    static var ownershipMutablePrimitives: Self {
-        .product(name: "Ownership", package: "swift-ownership")
-    }
-    static var asyncChannelPrimitives: Self {
-        .product(name: "Async Channel", package: "swift-async-channel")
-    }
-    static var asyncPrimitive: Self {
-        .product(name: "Async Primitive", package: "swift-async")
-    }
-}
-
 let package = Package(
     name: "swift-html-render",
     platforms: [
@@ -83,10 +12,10 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: .htmlRenderingCore, targets: [.htmlRenderingCore]),
-        .library(name: .htmlAttributesRendering, targets: [.htmlAttributesRendering]),
-        .library(name: .htmlElementsRendering, targets: [.htmlElementsRendering]),
-        .library(name: .htmlRendering, targets: [.htmlRendering]),
+        .library(name: "HTML Rendering Core", targets: ["HTML Rendering Core"]),
+        .library(name: "HTML Attributes Rendering", targets: ["HTML Attributes Rendering"]),
+        .library(name: "HTML Elements Rendering", targets: ["HTML Elements Rendering"]),
+        .library(name: "HTML Rendering", targets: ["HTML Rendering"]),
         .library(
             name: "HTML Rendering Core Test Support",
             targets: ["HTML Rendering Core Test Support"]
@@ -105,7 +34,6 @@ let package = Package(
         .package(url: "https://github.com/swift-standards/swift-html-standard.git", branch: "main"),
         .package(url: "https://github.com/swift-whatwg/swift-whatwg-html.git", branch: "main"),
         .package(url: "https://github.com/swift-w3c/swift-w3c-css.git", branch: "main"),
-
         .package(
             url: "https://github.com/swift-molecules/swift-dictionary.git",
             branch: "main"
@@ -152,68 +80,66 @@ let package = Package(
             name: "HTML Rendering Core",
             dependencies: [
                 .product(name: "Byte", package: "swift-byte"),
-                .renderingPrimitives,
-                .ascii,
-                .w3cCSSShared,
-                .htmlStandard,
-                .dictionaryPrimitives,
+                .product(name: "Renderer", package: "swift-renderer"),
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(name: "W3C CSS Shared", package: "swift-w3c-css"),
+                .product(name: "HTML Standard", package: "swift-html-standard"),
+                .product(name: "Dictionary", package: "swift-dictionary"),
                 .product(
                     name: "Dictionary Ordered",
                     package: "swift-dictionary-ordered"
                 ),
-                .sharedPrimitive,
-                .hashIndexedPrimitive,
-                .hashTablePrimitive,
-                .bufferLinearPrimitive,
-                .ownershipMutablePrimitives,
-                .asyncChannelPrimitives,
-                .asyncPrimitive,
-                .product(name: "Buffer", package: "swift-buffer"),
+                .product(name: "Ownership Shared Primitive", package: "swift-ownership-shared"),
+                .product(name: "Hash Indexed Primitive", package: "swift-hash-table"),
+                .product(name: "Hash Table Primitive", package: "swift-hash-table"),
                 .product(name: "Buffer Linear Primitive", package: "swift-buffer-linear"),
+                .product(name: "Ownership", package: "swift-ownership"),
+                .product(name: "Async Channel", package: "swift-async-channel"),
+                .product(name: "Async Primitive", package: "swift-async"),
+                .product(name: "Buffer", package: "swift-buffer"),
                 .product(name: "Buffer Linear Bounded Primitive", package: "swift-buffer-linear"),
                 .product(name: "Buffer Ring Primitive", package: "swift-buffer-ring"),
                 .product(name: "Memory Allocator Pool", package: "swift-memory-allocation"),
                 .product(name: "Memory Pool", package: "swift-memory-allocation"),
                 .product(name: "Memory Allocator", package: "swift-memory-allocation"),
                 .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Ownership Shared Primitive", package: "swift-ownership-shared"),
                 .product(name: "Storage", package: "swift-storage"),
                 .product(name: "Store", package: "swift-store"),
             ]
         ),
 
         .target(
-            name: .htmlAttributesRendering,
+            name: "HTML Attributes Rendering",
             dependencies: [
-                .htmlStandard,
-                .htmlRenderingCore,
-                .htmlStandardAttributes,
+                .product(name: "HTML Standard", package: "swift-html-standard"),
+                .target(name: "HTML Rendering Core"),
+                .product(name: "HTML Standard Attributes", package: "swift-html-standard"),
             ]
         ),
 
         .target(
-            name: .htmlElementsRendering,
+            name: "HTML Elements Rendering",
             dependencies: [
-                .htmlStandard,
-                .htmlAttributesRendering,
-                .htmlStandardElements,
+                .product(name: "HTML Standard", package: "swift-html-standard"),
+                .target(name: "HTML Attributes Rendering"),
+                .product(name: "HTML Standard Elements", package: "swift-html-standard"),
             ]
         ),
 
         .target(
-            name: .htmlRendering,
+            name: "HTML Rendering",
             dependencies: [
-                .htmlStandard,
-                .htmlAttributesRendering,
-                .htmlElementsRendering,
+                .product(name: "HTML Standard", package: "swift-html-standard"),
+                .target(name: "HTML Attributes Rendering"),
+                .target(name: "HTML Elements Rendering"),
             ]
         ),
 
         .target(
             name: "HTML Rendering Core Test Support",
             dependencies: [
-                .htmlRenderingCore,
-                .w3cCSSShared,
+                .target(name: "HTML Rendering Core"),
+                .product(name: "W3C CSS Shared", package: "swift-w3c-css"),
             ],
             path: "Tests/Support"
         ),
@@ -222,8 +148,8 @@ let package = Package(
             name: "HTML Rendering Core Tests",
             dependencies: [
                 .product(name: "Byte", package: "swift-byte"),
-                .htmlRenderingCore,
-                .target(name: .htmlRendering),
+                .target(name: "HTML Rendering Core"),
+                .target(name: "HTML Rendering"),
                 .target(name: "HTML Rendering Core Test Support"),
             ],
             path: "Tests/HTML Rendering Core Tests"
