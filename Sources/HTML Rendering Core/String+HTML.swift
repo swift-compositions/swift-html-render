@@ -1,7 +1,7 @@
 import Renderer
 public import WHATWG_HTML_Shared
 
-extension String: HTML.View {
+extension String: HTML.View, @retroactive Renderer.Document.View {
     public var body: HTML.Text {
         HTML.Text(self)
     }

@@ -41,7 +41,7 @@ extension HTML.Script.Element {
     }
 }
 
-extension HTML.Script.Element: HTML.View {
+extension HTML.Script.Element: HTML.View, @retroactive Renderer.Document.View {
     public var body: some HTML.View {
         HTML.Script.Element(
             src: self.src,

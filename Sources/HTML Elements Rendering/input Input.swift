@@ -2,7 +2,7 @@ import HTML_Attributes_Rendering
 public import HTML_Standard
 import HTML_Standard_Elements
 
-extension HTML.Input.Element: HTML.View {}
+extension HTML.Input.Element: HTML.View, @retroactive Renderer.Document.View {}
 
 extension HTML.Input.Element {
     @HTML.Builder
