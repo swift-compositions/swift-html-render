@@ -2,7 +2,9 @@ import Testing
 
 @testable import HTML_Rendering_Core
 
-extension HTML.AtRule {
+enum `HTML.AtRule Tests` {}
+
+extension `HTML.AtRule Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -11,7 +13,7 @@ extension HTML.AtRule {
     }
 }
 
-extension HTML.AtRule.Test.Unit {
+extension `HTML.AtRule Tests`.Test.Unit {
 
     @Test
     func `basic initialization`() {
@@ -121,7 +123,7 @@ extension HTML.AtRule.Test.Unit {
     }
 }
 
-extension HTML.AtRule.Test.Integration {
+extension `HTML.AtRule Tests`.Test.Integration {
 
     @Test
     func `used with Style`() {

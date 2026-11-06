@@ -4,7 +4,9 @@ import Testing
 
 @_spi(DynamicHTML) @testable import HTML_Rendering_Core
 
-extension HTML.Context.Configuration.Error {
+enum `HTML.Context.Configuration.Error Tests` {}
+
+extension `HTML.Context.Configuration.Error Tests` {
     @Suite
     struct Test {
         @Suite struct Unit {}
@@ -13,7 +15,7 @@ extension HTML.Context.Configuration.Error {
     }
 }
 
-extension HTML.Context.Configuration.Error.Test.Unit {
+extension `HTML.Context.Configuration.Error Tests`.Test.Unit {
 
     @Test
     func `initialization with message`() {
@@ -95,7 +97,7 @@ extension HTML.Context.Configuration.Error.Test.Unit {
     }
 }
 
-extension HTML.Context.Configuration.Error.Test.`Edge Case` {
+extension `HTML.Context.Configuration.Error Tests`.Test.`Edge Case` {
 
     @Test
     func `empty message`() {
@@ -134,7 +136,7 @@ extension HTML.Context.Configuration.Error.Test.`Edge Case` {
     }
 }
 
-extension HTML.Context.Configuration.Error.Test.Integration {
+extension `HTML.Context.Configuration.Error Tests`.Test.Integration {
 
     @Test
     func `String initializer succeeds for valid content`() throws {
