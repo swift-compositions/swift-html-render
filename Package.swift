@@ -58,6 +58,10 @@ let package = Package(
             branch: "main"
         ),
         .package(
+            url: "https://github.com/swift-ietf/swift-rfc-5646.git",
+            branch: "main"
+        ),
+        .package(
             url: "https://github.com/swift-atoms/swift-async.git",
             branch: "main"
         ),
@@ -113,6 +117,7 @@ let package = Package(
                 .product(name: "HTML Standard", package: "swift-html-standard"),
                 .target(name: "HTML Rendering Core"),
                 .product(name: "HTML Standard Attributes", package: "swift-html-standard"),
+                .product(name: "RFC 5646", package: "swift-rfc-5646"),
             ]
         ),
 
