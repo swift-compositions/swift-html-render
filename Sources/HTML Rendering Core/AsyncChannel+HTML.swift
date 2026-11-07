@@ -5,7 +5,7 @@ import Ownership
 import Renderer
 public import WHATWG_HTML_Shared
 
-extension Async_Primitive.Async.Channel<ArraySlice<Byte>>.Bounded {
+extension Async_Primitive::Async.Channel<ArraySlice<Byte>>.Bounded {
 
     public init<View: HTML.View & Sendable>(
         chunkSize: Int = 4096,
@@ -25,7 +25,7 @@ extension Async_Primitive.Async.Channel<ArraySlice<Byte>>.Bounded {
             var offset = 0
             while offset < allBytes.count {
                 let end = min(offset + chunkSize, allBytes.count)
-                do throws(Async_Primitive.Async.Channel<ArraySlice<Byte>>.Error) {
+                do throws(Async_Primitive::Async.Channel<ArraySlice<Byte>>.Error) {
                     try await sender.send(ArraySlice(allBytes[offset..<end]))
                 } catch {
 
@@ -37,7 +37,7 @@ extension Async_Primitive.Async.Channel<ArraySlice<Byte>>.Bounded {
     }
 }
 
-extension Async_Primitive.Async.Channel<ArraySlice<Byte>>.Bounded {
+extension Async_Primitive::Async.Channel<ArraySlice<Byte>>.Bounded {
 
     public init<Document: HTML.Document.`Protocol` & Sendable>(
         chunkSize: Int = 4096,
@@ -55,7 +55,7 @@ extension Async_Primitive.Async.Channel<ArraySlice<Byte>>.Bounded {
             var offset = 0
             while offset < allBytes.count {
                 let end = min(offset + chunkSize, allBytes.count)
-                do throws(Async_Primitive.Async.Channel<ArraySlice<Byte>>.Error) {
+                do throws(Async_Primitive::Async.Channel<ArraySlice<Byte>>.Error) {
                     try await sender.send(ArraySlice(allBytes[offset..<end]))
                 } catch {
 
