@@ -12,3 +12,7 @@ extension HTML {
         public var rawValue: String
     }
 }
+
+extension HTML.AtRule {
+    public typealias Media = HTML.AtRule
+}
