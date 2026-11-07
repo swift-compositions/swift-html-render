@@ -3,62 +3,66 @@ import Testing
 
 @testable import HTML_Rendering_Core
 
-@Suite
-struct `AtRule media Tests` {
+enum `AtRule Media Tests` {}
 
-    @Test
-    func `AtRule media basic creation`() throws {
-        let atRule = HTML.AtRule(rawValue: "screen and (max-width: 768px)")
+extension `AtRule Media Tests` {
+    @Suite
+    struct `AtRule media Tests` {
 
-        #expect(atRule.rawValue == "screen and (max-width: 768px)")
-    }
+        @Test
+        func `AtRule media basic creation`() throws {
+            let atRule = HTML.AtRule(rawValue: "screen and (max-width: 768px)")
 
-    @Test
-    func `AtRule media with different conditions`() throws {
-        let mobileQuery = HTML.AtRule(rawValue: "screen and (max-width: 480px)")
-        let tabletQuery = HTML.AtRule(
-            rawValue: "screen and (min-width: 481px) and (max-width: 1024px)"
-        )
-        let desktopQuery = HTML.AtRule(rawValue: "screen and (min-width: 1025px)")
+            #expect(atRule.rawValue == "screen and (max-width: 768px)")
+        }
 
-        #expect(mobileQuery.rawValue.contains("max-width: 480px"))
-        #expect(tabletQuery.rawValue.contains("min-width: 481px"))
-        #expect(desktopQuery.rawValue.contains("min-width: 1025px"))
-    }
+        @Test
+        func `AtRule media with different conditions`() throws {
+            let mobileQuery = HTML.AtRule(rawValue: "screen and (max-width: 480px)")
+            let tabletQuery = HTML.AtRule(
+                rawValue: "screen and (min-width: 481px) and (max-width: 1024px)"
+            )
+            let desktopQuery = HTML.AtRule(rawValue: "screen and (min-width: 1025px)")
 
-    @Test
-    func `AtRule media with print media`() throws {
-        let printQuery = HTML.AtRule(rawValue: "print")
+            #expect(mobileQuery.rawValue.contains("max-width: 480px"))
+            #expect(tabletQuery.rawValue.contains("min-width: 481px"))
+            #expect(desktopQuery.rawValue.contains("min-width: 1025px"))
+        }
 
-        #expect(printQuery.rawValue == "print")
-    }
+        @Test
+        func `AtRule media with print media`() throws {
+            let printQuery = HTML.AtRule(rawValue: "print")
 
-    @Test
-    func `AtRule media with orientation`() throws {
-        let portraitQuery = HTML.AtRule(rawValue: "screen and (orientation: portrait)")
-        let landscapeQuery = HTML.AtRule(rawValue: "screen and (orientation: landscape)")
+            #expect(printQuery.rawValue == "print")
+        }
 
-        #expect(portraitQuery.rawValue.contains("portrait"))
-        #expect(landscapeQuery.rawValue.contains("landscape"))
-    }
+        @Test
+        func `AtRule media with orientation`() throws {
+            let portraitQuery = HTML.AtRule(rawValue: "screen and (orientation: portrait)")
+            let landscapeQuery = HTML.AtRule(rawValue: "screen and (orientation: landscape)")
 
-    @Test
-    func `AtRule media with device features`() throws {
-        let retinaQuery = HTML.AtRule(rawValue: "screen and (-webkit-min-device-pixel-ratio: 2)")
-        let hoverQuery = HTML.AtRule(rawValue: "screen and (hover: hover)")
+            #expect(portraitQuery.rawValue.contains("portrait"))
+            #expect(landscapeQuery.rawValue.contains("landscape"))
+        }
 
-        #expect(retinaQuery.rawValue.contains("device-pixel-ratio"))
-        #expect(hoverQuery.rawValue.contains("hover: hover"))
-    }
+        @Test
+        func `AtRule media with device features`() throws {
+            let retinaQuery = HTML.AtRule(rawValue: "screen and (-webkit-min-device-pixel-ratio: 2)")
+            let hoverQuery = HTML.AtRule(rawValue: "screen and (hover: hover)")
 
-    @Test
-    func `AtRule media equality`() throws {
-        let query1 = HTML.AtRule(rawValue: "screen and (max-width: 768px)")
-        let query2 = HTML.AtRule(rawValue: "screen and (max-width: 768px)")
-        let query3 = HTML.AtRule(rawValue: "screen and (max-width: 1024px)")
+            #expect(retinaQuery.rawValue.contains("device-pixel-ratio"))
+            #expect(hoverQuery.rawValue.contains("hover: hover"))
+        }
 
-        #expect(query1.rawValue == query2.rawValue)
-        #expect(query1.rawValue != query3.rawValue)
+        @Test
+        func `AtRule media equality`() throws {
+            let query1 = HTML.AtRule(rawValue: "screen and (max-width: 768px)")
+            let query2 = HTML.AtRule(rawValue: "screen and (max-width: 768px)")
+            let query3 = HTML.AtRule(rawValue: "screen and (max-width: 1024px)")
+
+            #expect(query1.rawValue == query2.rawValue)
+            #expect(query1.rawValue != query3.rawValue)
+        }
     }
 }
 

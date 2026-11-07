@@ -3,104 +3,108 @@ import Testing
 
 @testable import HTML_Rendering_Core
 
-@Suite
-struct `Array Map Tests` {
+enum `HTMLForEach Tests` {}
 
-    @Test
-    func `map with array of strings`() throws {
-        let items = ["apple", "banana", "cherry"]
-        let views = items.map { item in
-            HTML.Text(item)
-        }
+extension `HTMLForEach Tests` {
+    @Suite
+    struct `Array Map Tests` {
 
-        let rendered = try String(views)
-        #expect(rendered == "applebananacherry")
-    }
-
-    @Test
-    func `map with elements`() throws {
-        let items = ["first", "second", "third"]
-        let views = items.map { item in
-            tag("li") {
+        @Test
+        func `map with array of strings`() throws {
+            let items = ["apple", "banana", "cherry"]
+            let views = items.map { item in
                 HTML.Text(item)
             }
+
+            let rendered = try String(views)
+            #expect(rendered == "applebananacherry")
         }
 
-        let rendered = try String(HTML.Document { views })
-        #expect(rendered.contains("<li>first</li>"))
-        #expect(rendered.contains("<li>second</li>"))
-        #expect(rendered.contains("<li>third</li>"))
-    }
-
-    @Test
-    func `map with empty array`() throws {
-        let items: [String] = []
-        let views = items.map { item in
-            HTML.Text(item)
-        }
-
-        let rendered = try String(views)
-        #expect(rendered.isEmpty)
-    }
-
-    @Test
-    func `map with numbers`() throws {
-        let numbers = [1, 2, 3, 4, 5]
-        let views = numbers.map { number in
-            HTML.Text(String(number))
-        }
-
-        let rendered = try String(views)
-        #expect(rendered == "12345")
-    }
-
-    @Test
-    func `map nested in elements`() throws {
-        let items = ["item1", "item2", "item3"]
-        let list = tag("ul") {
-            items.map { item in
+        @Test
+        func `map with elements`() throws {
+            let items = ["first", "second", "third"]
+            let views = items.map { item in
                 tag("li") {
                     HTML.Text(item)
                 }
             }
+
+            let rendered = try String(HTML.Document { views })
+            #expect(rendered.contains("<li>first</li>"))
+            #expect(rendered.contains("<li>second</li>"))
+            #expect(rendered.contains("<li>third</li>"))
         }
 
-        let rendered = try String(HTML.Document { list })
-        #expect(rendered.contains("<ul>"))
-        #expect(rendered.contains("<li>item1</li>"))
-        #expect(rendered.contains("<li>item2</li>"))
-        #expect(rendered.contains("<li>item3</li>"))
-        #expect(rendered.contains("</ul>"))
-    }
+        @Test
+        func `map with empty array`() throws {
+            let items: [String] = []
+            let views = items.map { item in
+                HTML.Text(item)
+            }
 
-    @Test
-    func `map with complex content`() throws {
-        struct Item {
-            let title: String
-            let description: String
+            let rendered = try String(views)
+            #expect(rendered.isEmpty)
         }
 
-        let items = [
-            Item(title: "First", description: "First description"),
-            Item(title: "Second", description: "Second description"),
-        ]
+        @Test
+        func `map with numbers`() throws {
+            let numbers = [1, 2, 3, 4, 5]
+            let views = numbers.map { number in
+                HTML.Text(String(number))
+            }
 
-        let views = items.map { item in
-            tag("div") {
-                tag("h3") {
-                    HTML.Text(item.title)
-                }
-                tag("p") {
-                    HTML.Text(item.description)
+            let rendered = try String(views)
+            #expect(rendered == "12345")
+        }
+
+        @Test
+        func `map nested in elements`() throws {
+            let items = ["item1", "item2", "item3"]
+            let list = tag("ul") {
+                items.map { item in
+                    tag("li") {
+                        HTML.Text(item)
+                    }
                 }
             }
+
+            let rendered = try String(HTML.Document { list })
+            #expect(rendered.contains("<ul>"))
+            #expect(rendered.contains("<li>item1</li>"))
+            #expect(rendered.contains("<li>item2</li>"))
+            #expect(rendered.contains("<li>item3</li>"))
+            #expect(rendered.contains("</ul>"))
         }
 
-        let rendered = try String(HTML.Document { views })
-        #expect(rendered.contains("<h3>First</h3>"))
-        #expect(rendered.contains("<p>First description</p>"))
-        #expect(rendered.contains("<h3>Second</h3>"))
-        #expect(rendered.contains("<p>Second description</p>"))
+        @Test
+        func `map with complex content`() throws {
+            struct Item {
+                let title: String
+                let description: String
+            }
+
+            let items = [
+                Item(title: "First", description: "First description"),
+                Item(title: "Second", description: "Second description"),
+            ]
+
+            let views = items.map { item in
+                tag("div") {
+                    tag("h3") {
+                        HTML.Text(item.title)
+                    }
+                    tag("p") {
+                        HTML.Text(item.description)
+                    }
+                }
+            }
+
+            let rendered = try String(HTML.Document { views })
+            #expect(rendered.contains("<h3>First</h3>"))
+            #expect(rendered.contains("<p>First description</p>"))
+            #expect(rendered.contains("<h3>Second</h3>"))
+            #expect(rendered.contains("<p>Second description</p>"))
+        }
     }
 }
 

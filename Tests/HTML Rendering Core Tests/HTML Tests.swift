@@ -2,14 +2,18 @@ import Testing
 
 @testable import HTML_Rendering_Core
 
-@Suite
-struct `HTML Protocol Tests` {
-    @Suite struct Unit {}
-    @Suite struct `Edge Case` {}
-    @Suite struct Integration {}
+enum `HTML Tests` {}
+
+extension `HTML Tests` {
+    @Suite
+    struct `HTML Protocol Tests` {
+        @Suite struct Unit {}
+        @Suite struct `Edge Case` {}
+        @Suite struct Integration {}
+    }
 }
 
-extension `HTML Protocol Tests`.Unit {
+extension `HTML Tests`.`HTML Protocol Tests`.Unit {
 
     @Test
     func `HTML protocol basic functionality`() throws {
@@ -37,7 +41,7 @@ extension `HTML Protocol Tests`.Unit {
     }
 }
 
-extension `HTML Protocol Tests`.Integration {
+extension `HTML Tests`.`HTML Protocol Tests`.Integration {
 
     @Test
     func `HTML composition`() throws {

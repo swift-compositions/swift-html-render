@@ -4,14 +4,18 @@ import HTML_Rendering
 import HTML_Standard
 import Testing
 
-@Suite
-struct `RangeReplaceableCollection Byte HTML Tests` {
-    @Suite struct Unit {}
-    @Suite struct `Edge Case` {}
-    @Suite struct Integration {}
+enum `RangeReplaceableCollection UInt8 +HTML Tests` {}
+
+extension `RangeReplaceableCollection UInt8 +HTML Tests` {
+    @Suite
+    struct `RangeReplaceableCollection Byte HTML Tests` {
+        @Suite struct Unit {}
+        @Suite struct `Edge Case` {}
+        @Suite struct Integration {}
+    }
 }
 
-extension `RangeReplaceableCollection Byte HTML Tests`.Unit {
+extension `RangeReplaceableCollection UInt8 +HTML Tests`.`RangeReplaceableCollection Byte HTML Tests`.Unit {
 
     @Test
     func `Array Byte renders HTML view`() {
@@ -98,7 +102,7 @@ extension `RangeReplaceableCollection Byte HTML Tests`.Unit {
     }
 }
 
-extension `RangeReplaceableCollection Byte HTML Tests`.`Edge Case` {
+extension `RangeReplaceableCollection UInt8 +HTML Tests`.`RangeReplaceableCollection Byte HTML Tests`.`Edge Case` {
 
     @Test
     func `Array Byte renders empty HTML`() {
@@ -122,7 +126,7 @@ extension `RangeReplaceableCollection Byte HTML Tests`.`Edge Case` {
     }
 }
 
-extension `RangeReplaceableCollection Byte HTML Tests`.Integration {
+extension `RangeReplaceableCollection UInt8 +HTML Tests`.`RangeReplaceableCollection Byte HTML Tests`.Integration {
 
     @Test
     func `Array Byte renders HTML document`() {
@@ -149,7 +153,7 @@ extension `RangeReplaceableCollection Byte HTML Tests`.Integration {
     }
 }
 
-extension `RangeReplaceableCollection Byte HTML Tests`.Integration {
+extension `RangeReplaceableCollection UInt8 +HTML Tests`.`RangeReplaceableCollection Byte HTML Tests`.Integration {
     @Test
     func `raw rendering preserves every byte pattern`() {
         let input = (UInt8.min...UInt8.max).map(Byte.init(bitPattern:))

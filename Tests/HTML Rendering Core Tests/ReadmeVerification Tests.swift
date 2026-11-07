@@ -4,13 +4,17 @@ import Testing
 
 @_spi(DynamicHTML) @testable import HTML_Rendering_Core
 
-@Suite
-struct `README Verification Tests` {
-    @Suite struct Unit {}
-    @Suite struct Integration {}
+enum `ReadmeVerification Tests` {}
+
+extension `ReadmeVerification Tests` {
+    @Suite
+    struct `README Verification Tests` {
+        @Suite struct Unit {}
+        @Suite struct Integration {}
+    }
 }
 
-extension `README Verification Tests`.Unit {
+extension `ReadmeVerification Tests`.`README Verification Tests`.Unit {
 
     @Test
     func `tag function`() throws {
@@ -98,7 +102,7 @@ extension `README Verification Tests`.Unit {
     }
 }
 
-extension `README Verification Tests`.Integration {
+extension `ReadmeVerification Tests`.`README Verification Tests`.Integration {
 
     @Test
     func `basic usage - Greeting component`() throws {

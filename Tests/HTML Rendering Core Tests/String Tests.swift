@@ -4,14 +4,18 @@ import Testing
 
 @_spi(DynamicHTML) @testable import HTML_Rendering_Core
 
-@Suite
-struct `String Extensions Tests` {
-    @Suite struct Unit {}
-    @Suite struct `Edge Case` {}
-    @Suite struct Integration {}
+enum `String Tests` {}
+
+extension `String Tests` {
+    @Suite
+    struct `String Extensions Tests` {
+        @Suite struct Unit {}
+        @Suite struct `Edge Case` {}
+        @Suite struct Integration {}
+    }
 }
 
-extension `String Extensions Tests`.Unit {
+extension `String Tests`.`String Extensions Tests`.Unit {
 
     @Test
     func `String from HTML text`() throws {
@@ -31,7 +35,7 @@ extension `String Extensions Tests`.Unit {
     }
 }
 
-extension `String Extensions Tests`.`Edge Case` {
+extension `String Tests`.`String Extensions Tests`.`Edge Case` {
 
     @Test
     func `String from empty HTML`() throws {
@@ -41,7 +45,7 @@ extension `String Extensions Tests`.`Edge Case` {
     }
 }
 
-extension `String Extensions Tests`.Integration {
+extension `String Tests`.`String Extensions Tests`.Integration {
 
     @Test
     func `String from HTML element`() throws {

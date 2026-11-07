@@ -3,190 +3,194 @@ import Testing
 
 @testable import HTML_Rendering_Core
 
-@Suite
-struct `_Tuple Tests` {
+enum `_HTMLTuple Tests` {}
 
-    @Test
-    func `_Tuple renders multiple elements`() throws {
+extension `_HTMLTuple Tests` {
+    @Suite
+    struct `_Tuple Tests` {
 
-        let html = HTML.Group {
-            tag("h1") {
-                HTML.Text("Title")
-            }
-            tag("p") {
-                HTML.Text("Paragraph")
-            }
-            tag("footer") {
-                HTML.Text("Footer")
-            }
-        }
+        @Test
+        func `_Tuple renders multiple elements`() throws {
 
-        let rendered = try String(html)
-        #expect(rendered.contains("<h1>Title</h1>"))
-        #expect(rendered.contains("<p>Paragraph</p>"))
-        #expect(rendered.contains("<footer>Footer</footer>"))
-    }
-
-    @Test
-    func `_Tuple with two elements`() throws {
-        let html = HTML.Group {
-            HTML.Text("First")
-            HTML.Text("Second")
-        }
-
-        let rendered = try String(html)
-        #expect(rendered == "FirstSecond")
-    }
-
-    @Test
-    func `_Tuple with single element`() throws {
-        let html = HTML.Group {
-            tag("div") {
-                HTML.Text("Only one")
-            }
-        }
-
-        let rendered = try String(html)
-        #expect(rendered.contains("<div>"))
-        #expect(rendered.contains("Only one"))
-    }
-
-    @Test
-    func `_Tuple isolates attributes between elements`() throws {
-        let html = HTML.Document {
-            tag("div") {
-                HTML.Text("First div")
-            }
-            .attribute("class", "first")
-
-            tag("div") {
-                HTML.Text("Second div")
-            }
-            .attribute("class", "second")
-        }
-
-        let rendered = try String(html)
-        #expect(rendered.contains("class=\"first\""))
-        #expect(rendered.contains("class=\"second\""))
-
-        let firstDivRange = rendered.range(of: "First div")!
-        let secondDivRange = rendered.range(of: "Second div")!
-        let firstClassRange = rendered.range(of: "class=\"first\"")!
-        let secondClassRange = rendered.range(of: "class=\"second\"")!
-        #expect(firstClassRange.lowerBound < firstDivRange.lowerBound)
-        #expect(secondClassRange.lowerBound < secondDivRange.lowerBound)
-    }
-
-    @Test
-    func `_Tuple with nested groups`() throws {
-        let html = HTML.Group {
-            tag("header") {
-                HTML.Text("Header")
-            }
-            HTML.Group {
-                tag("main") {
-                    HTML.Text("Main content")
+            let html = HTML.Group {
+                tag("h1") {
+                    HTML.Text("Title")
                 }
-                tag("aside") {
-                    HTML.Text("Sidebar")
+                tag("p") {
+                    HTML.Text("Paragraph")
+                }
+                tag("footer") {
+                    HTML.Text("Footer")
                 }
             }
-            tag("footer") {
-                HTML.Text("Footer")
-            }
+
+            let rendered = try String(html)
+            #expect(rendered.contains("<h1>Title</h1>"))
+            #expect(rendered.contains("<p>Paragraph</p>"))
+            #expect(rendered.contains("<footer>Footer</footer>"))
         }
 
-        let rendered = try String(html)
-        #expect(rendered.contains("<header>"))
-        #expect(rendered.contains("<main>"))
-        #expect(rendered.contains("<aside>"))
-        #expect(rendered.contains("<footer>"))
-    }
-
-    @Test
-    func `_Tuple with mixed content types`() throws {
-        let html = HTML.Group {
-            HTML.Text("Plain text")
-            tag("br")
-            HTML.Raw("<strong>Raw HTML</strong>")
-            tag("p") {
-                HTML.Text("Paragraph")
-            }
-        }
-
-        let rendered = try String(HTML.Document { html })
-        #expect(rendered.contains("Plain text"))
-        #expect(rendered.contains("<br>"))
-        #expect(rendered.contains("<strong>Raw HTML</strong>"))
-        #expect(rendered.contains("<p>"))
-    }
-
-    @Test
-    func `_Tuple with void and regular elements`() throws {
-        let html = HTML.Group {
-            tag("input")
-                .attribute("type", "text")
-            tag("label") {
-                HTML.Text("Name")
-            }
-            tag("br")
-            tag("input")
-                .attribute("type", "submit")
-        }
-
-        let rendered = try String(HTML.Document { html })
-        #expect(rendered.contains("type=\"text\""))
-        #expect(rendered.contains("<label>"))
-        #expect(rendered.contains("<br>"))
-        #expect(rendered.contains("type=\"submit\""))
-    }
-
-    @Test
-    func `_Tuple propagates styles correctly`() throws {
-        let html = HTML.Document {
-            tag("div") {
+        @Test
+        func `_Tuple with two elements`() throws {
+            let html = HTML.Group {
                 HTML.Text("First")
-            }
-            .inlineStyle("color", "red")
-
-            tag("div") {
                 HTML.Text("Second")
             }
-            .inlineStyle("color", "blue")
+
+            let rendered = try String(html)
+            #expect(rendered == "FirstSecond")
         }
 
-        let rendered = try String(html)
-        #expect(rendered.contains("color:red"))
-        #expect(rendered.contains("color:blue"))
-    }
+        @Test
+        func `_Tuple with single element`() throws {
+            let html = HTML.Group {
+                tag("div") {
+                    HTML.Text("Only one")
+                }
+            }
 
-    @Test
-    func `_Tuple in document structure`() throws {
-        let document = HTML.Document {
-            tag("header") {
-                tag("h1") {
-                    HTML.Text("Site Title")
-                }
-            }
-            tag("nav") {
-                tag("a") { HTML.Text("Home") }.attribute("href", "/")
-                tag("a") { HTML.Text("About") }.attribute("href", "/about")
-            }
-            tag("main") {
-                tag("article") {
-                    HTML.Text("Article content")
-                }
-            }
-            tag("footer") {
-                HTML.Text("© 2025")
-            }
+            let rendered = try String(html)
+            #expect(rendered.contains("<div>"))
+            #expect(rendered.contains("Only one"))
         }
 
-        let rendered = try String(document)
-        #expect(rendered.contains("<header>"))
-        #expect(rendered.contains("<nav>"))
-        #expect(rendered.contains("<main>"))
-        #expect(rendered.contains("<footer>"))
+        @Test
+        func `_Tuple isolates attributes between elements`() throws {
+            let html = HTML.Document {
+                tag("div") {
+                    HTML.Text("First div")
+                }
+                .attribute("class", "first")
+
+                tag("div") {
+                    HTML.Text("Second div")
+                }
+                .attribute("class", "second")
+            }
+
+            let rendered = try String(html)
+            #expect(rendered.contains("class=\"first\""))
+            #expect(rendered.contains("class=\"second\""))
+
+            let firstDivRange = rendered.range(of: "First div")!
+            let secondDivRange = rendered.range(of: "Second div")!
+            let firstClassRange = rendered.range(of: "class=\"first\"")!
+            let secondClassRange = rendered.range(of: "class=\"second\"")!
+            #expect(firstClassRange.lowerBound < firstDivRange.lowerBound)
+            #expect(secondClassRange.lowerBound < secondDivRange.lowerBound)
+        }
+
+        @Test
+        func `_Tuple with nested groups`() throws {
+            let html = HTML.Group {
+                tag("header") {
+                    HTML.Text("Header")
+                }
+                HTML.Group {
+                    tag("main") {
+                        HTML.Text("Main content")
+                    }
+                    tag("aside") {
+                        HTML.Text("Sidebar")
+                    }
+                }
+                tag("footer") {
+                    HTML.Text("Footer")
+                }
+            }
+
+            let rendered = try String(html)
+            #expect(rendered.contains("<header>"))
+            #expect(rendered.contains("<main>"))
+            #expect(rendered.contains("<aside>"))
+            #expect(rendered.contains("<footer>"))
+        }
+
+        @Test
+        func `_Tuple with mixed content types`() throws {
+            let html = HTML.Group {
+                HTML.Text("Plain text")
+                tag("br")
+                HTML.Raw("<strong>Raw HTML</strong>")
+                tag("p") {
+                    HTML.Text("Paragraph")
+                }
+            }
+
+            let rendered = try String(HTML.Document { html })
+            #expect(rendered.contains("Plain text"))
+            #expect(rendered.contains("<br>"))
+            #expect(rendered.contains("<strong>Raw HTML</strong>"))
+            #expect(rendered.contains("<p>"))
+        }
+
+        @Test
+        func `_Tuple with void and regular elements`() throws {
+            let html = HTML.Group {
+                tag("input")
+                    .attribute("type", "text")
+                tag("label") {
+                    HTML.Text("Name")
+                }
+                tag("br")
+                tag("input")
+                    .attribute("type", "submit")
+            }
+
+            let rendered = try String(HTML.Document { html })
+            #expect(rendered.contains("type=\"text\""))
+            #expect(rendered.contains("<label>"))
+            #expect(rendered.contains("<br>"))
+            #expect(rendered.contains("type=\"submit\""))
+        }
+
+        @Test
+        func `_Tuple propagates styles correctly`() throws {
+            let html = HTML.Document {
+                tag("div") {
+                    HTML.Text("First")
+                }
+                .inlineStyle("color", "red")
+
+                tag("div") {
+                    HTML.Text("Second")
+                }
+                .inlineStyle("color", "blue")
+            }
+
+            let rendered = try String(html)
+            #expect(rendered.contains("color:red"))
+            #expect(rendered.contains("color:blue"))
+        }
+
+        @Test
+        func `_Tuple in document structure`() throws {
+            let document = HTML.Document {
+                tag("header") {
+                    tag("h1") {
+                        HTML.Text("Site Title")
+                    }
+                }
+                tag("nav") {
+                    tag("a") { HTML.Text("Home") }.attribute("href", "/")
+                    tag("a") { HTML.Text("About") }.attribute("href", "/about")
+                }
+                tag("main") {
+                    tag("article") {
+                        HTML.Text("Article content")
+                    }
+                }
+                tag("footer") {
+                    HTML.Text("© 2025")
+                }
+            }
+
+            let rendered = try String(document)
+            #expect(rendered.contains("<header>"))
+            #expect(rendered.contains("<nav>"))
+            #expect(rendered.contains("<main>"))
+            #expect(rendered.contains("<footer>"))
+        }
     }
 }
 

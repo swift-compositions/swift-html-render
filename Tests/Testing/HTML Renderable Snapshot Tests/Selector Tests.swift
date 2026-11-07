@@ -136,112 +136,6 @@ struct `Selector Tests` {
         #expect(th.rawValue == "th")
     }
 
-    @Suite
-    struct `Combinator Tests` {
-        @Test
-        func `Descendant combinator method`() {
-            let span: HTML.Selector = "span"
-            let div: HTML.Selector = "div"
-            let result = span.descendant(of: div)
-            #expect(result.rawValue == "div span")
-        }
-
-        @Test
-        func `Child combinator method`() {
-            let p: HTML.Selector = "p"
-            let div: HTML.Selector = "div"
-            let result = p.child(of: div)
-            #expect(result.rawValue == "div > p")
-        }
-
-        @Test
-        func `Next sibling combinator method`() {
-            let p: HTML.Selector = "p"
-            let h1: HTML.Selector = "h1"
-            let result = p.nextSibling(of: h1)
-            #expect(result.rawValue == "h1 + p")
-
-            let aliasResult = p.adjacent(to: h1)
-            #expect(aliasResult.rawValue == "h1 + p")
-        }
-
-        @Test
-        func `Subsequent sibling combinator method`() {
-            let li: HTML.Selector = "li"
-            let result = li.subsequentSibling(of: li)
-            #expect(result.rawValue == "li ~ li")
-
-            let aliasResult = li.sibling(of: li)
-            #expect(aliasResult.rawValue == "li ~ li")
-        }
-
-        @Test
-        func `Column combinator method`() {
-            let td: HTML.Selector = "td"
-            let col: HTML.Selector = "col"
-            let result = td.column(of: col)
-            #expect(result.rawValue == "col || td")
-        }
-    }
-
-    @Suite
-    struct `Method Tests` {
-        @Test
-        func `Child combinator method`() {
-            let div: HTML.Selector = "div"
-            let p: HTML.Selector = "p"
-            let result = p.child(of: div)
-            #expect(result.rawValue == "div > p")
-        }
-
-        @Test
-        func `Next sibling combinator method`() {
-            let h1: HTML.Selector = "h1"
-            let p: HTML.Selector = "p"
-            let result = p.nextSibling(of: h1)
-            #expect(result.rawValue == "h1 + p")
-        }
-
-        @Test
-        func `Subsequent sibling combinator method`() {
-            let li: HTML.Selector = "li"
-            let result = li.subsequentSibling(of: li)
-            #expect(result.rawValue == "li ~ li")
-        }
-
-        @Test
-        func `Column combinator method`() {
-            let col: HTML.Selector = "col"
-            let td: HTML.Selector = "td"
-            let result = td.column(of: col)
-            #expect(result.rawValue == "col || td")
-        }
-
-        @Test
-        func `Selector list method`() {
-            let h1: HTML.Selector = "h1"
-            let h2: HTML.Selector = "h2"
-            let result = h1.or(h2)
-            #expect(result.rawValue == "h1, h2")
-        }
-
-        @Test
-        func `Multiple selector list method`() {
-            let h1: HTML.Selector = "h1"
-            let h2: HTML.Selector = "h2"
-            let h3: HTML.Selector = "h3"
-            let result = h1.or(h2, h3)
-            #expect(result.rawValue == "h1, h2, h3")
-        }
-
-        @Test
-        func `Compound selector method`() {
-            let div: HTML.Selector = "div"
-            let result = div.and(HTML.Selector.class("header"))
-            #expect(result.rawValue == "div.header")
-        }
-    }
-
     @Test
     func `Complex combinator chains using methods`() {
         let div: HTML.Selector = "div"
@@ -406,6 +300,114 @@ struct `Selector Tests` {
             .focus
         )
         #expect(focusedEnabledInput.rawValue == "input[type=\"text\"]:not(:disabled):focus")
+    }
+}
+
+extension `Selector Tests` {
+    @Suite
+    struct `Combinator Tests` {
+        @Test
+        func `Descendant combinator method`() {
+            let span: HTML.Selector = "span"
+            let div: HTML.Selector = "div"
+            let result = span.descendant(of: div)
+            #expect(result.rawValue == "div span")
+        }
+
+        @Test
+        func `Child combinator method`() {
+            let p: HTML.Selector = "p"
+            let div: HTML.Selector = "div"
+            let result = p.child(of: div)
+            #expect(result.rawValue == "div > p")
+        }
+
+        @Test
+        func `Next sibling combinator method`() {
+            let p: HTML.Selector = "p"
+            let h1: HTML.Selector = "h1"
+            let result = p.nextSibling(of: h1)
+            #expect(result.rawValue == "h1 + p")
+
+            let aliasResult = p.adjacent(to: h1)
+            #expect(aliasResult.rawValue == "h1 + p")
+        }
+
+        @Test
+        func `Subsequent sibling combinator method`() {
+            let li: HTML.Selector = "li"
+            let result = li.subsequentSibling(of: li)
+            #expect(result.rawValue == "li ~ li")
+
+            let aliasResult = li.sibling(of: li)
+            #expect(aliasResult.rawValue == "li ~ li")
+        }
+
+        @Test
+        func `Column combinator method`() {
+            let td: HTML.Selector = "td"
+            let col: HTML.Selector = "col"
+            let result = td.column(of: col)
+            #expect(result.rawValue == "col || td")
+        }
+    }
+
+    @Suite
+    struct `Method Tests` {
+        @Test
+        func `Child combinator method`() {
+            let div: HTML.Selector = "div"
+            let p: HTML.Selector = "p"
+            let result = p.child(of: div)
+            #expect(result.rawValue == "div > p")
+        }
+
+        @Test
+        func `Next sibling combinator method`() {
+            let h1: HTML.Selector = "h1"
+            let p: HTML.Selector = "p"
+            let result = p.nextSibling(of: h1)
+            #expect(result.rawValue == "h1 + p")
+        }
+
+        @Test
+        func `Subsequent sibling combinator method`() {
+            let li: HTML.Selector = "li"
+            let result = li.subsequentSibling(of: li)
+            #expect(result.rawValue == "li ~ li")
+        }
+
+        @Test
+        func `Column combinator method`() {
+            let col: HTML.Selector = "col"
+            let td: HTML.Selector = "td"
+            let result = td.column(of: col)
+            #expect(result.rawValue == "col || td")
+        }
+
+        @Test
+        func `Selector list method`() {
+            let h1: HTML.Selector = "h1"
+            let h2: HTML.Selector = "h2"
+            let result = h1.or(h2)
+            #expect(result.rawValue == "h1, h2")
+        }
+
+        @Test
+        func `Multiple selector list method`() {
+            let h1: HTML.Selector = "h1"
+            let h2: HTML.Selector = "h2"
+            let h3: HTML.Selector = "h3"
+            let result = h1.or(h2, h3)
+            #expect(result.rawValue == "h1, h2, h3")
+        }
+
+        @Test
+        func `Compound selector method`() {
+            let div: HTML.Selector = "div"
+            let result = div.and(HTML.Selector.class("header"))
+            #expect(result.rawValue == "div.header")
+        }
     }
 }
 
