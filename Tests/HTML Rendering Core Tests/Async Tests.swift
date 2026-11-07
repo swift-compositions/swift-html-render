@@ -13,7 +13,6 @@ struct `Async Tests` {
 }
 
 extension `Async Tests`.Unit {
-
     @Test
     func `async and sync rendering produce same output`() async throws {
         struct TestHTML: HTML.View, Sendable {
@@ -64,7 +63,7 @@ extension `Async Tests`.Unit {
         let bytes = [Byte](html)
         let result = String(decoding: bytes, as: UTF8.self)
 
-        for i in 1...5 {
+        (1...5).forEach { i in
             #expect(result.contains("Item \(i)"))
         }
     }
@@ -125,7 +124,6 @@ extension `Async Tests`.Unit {
 }
 
 extension `Async Tests`.`Edge Case` {
-
     @Test
     func `async with empty content`() async {
         struct EmptyHTML: HTML.View, Sendable {
@@ -142,7 +140,6 @@ extension `Async Tests`.`Edge Case` {
 }
 
 extension `Async Tests`.Integration {
-
     @Test
     func `concurrent renders are isolated`() async throws {
         let results = await withTaskGroup(of: String.self) { group in
