@@ -3,70 +3,68 @@ import Testing
 
 @testable import HTML_Rendering_Core
 
-extension `_HTMLAttributes Tests`.`_HTMLAttributes Tests` {
-    @Suite
-    struct `_HTMLAttributes Tests` {
+@Suite
+struct `_HTMLAttributes Tests` {
 
-        @Test
-        func `Single attribute`() throws {
-            let element = tag("div") {
-                HTML.Text("content")
-            }.attribute("class", "test-class")
+    @Test
+    func `Single attribute`() throws {
+        let element = tag("div") {
+            HTML.Text("content")
+        }.attribute("class", "test-class")
 
-            let rendered = try String(HTML.Document { element })
-            #expect(rendered.contains("class=\"test-class\""))
-            #expect(rendered.contains("content"))
+        let rendered = try String(HTML.Document { element })
+        #expect(rendered.contains("class=\"test-class\""))
+        #expect(rendered.contains("content"))
+    }
+
+    @Test
+    func `Multiple attributes`() throws {
+        let element = tag("div") {
+            HTML.Text("content")
         }
+        .attribute("class", "test-class")
+        .attribute("id", "test-id")
 
-        @Test
-        func `Multiple attributes`() throws {
-            let element = tag("div") {
-                HTML.Text("content")
-            }
-            .attribute("class", "test-class")
-            .attribute("id", "test-id")
+        let rendered = try String(HTML.Document { element })
+        #expect(rendered.contains("class=\"test-class\""))
+        #expect(rendered.contains("id=\"test-id\""))
+    }
 
-            let rendered = try String(HTML.Document { element })
-            #expect(rendered.contains("class=\"test-class\""))
-            #expect(rendered.contains("id=\"test-id\""))
-        }
+    @Test
+    func `Nil attribute value omits attribute`() throws {
+        let element = tag("div") {
+            HTML.Text("content")
+        }.attribute("class", nil)
 
-        @Test
-        func `Nil attribute value omits attribute`() throws {
-            let element = tag("div") {
-                HTML.Text("content")
-            }.attribute("class", nil)
+        let rendered = try String(HTML.Document { element })
+        #expect(!rendered.contains("class="))
+    }
 
-            let rendered = try String(HTML.Document { element })
-            #expect(!rendered.contains("class="))
-        }
+    @Test
+    func `Empty string attribute value`() throws {
+        let element = tag("div") {
+            HTML.Text("content")
+        }.attribute("hidden", "")
 
-        @Test
-        func `Empty string attribute value`() throws {
-            let element = tag("div") {
-                HTML.Text("content")
-            }.attribute("hidden", "")
+        let rendered = try String(element)
+        #expect(rendered.contains("hidden"))
+    }
 
-            let rendered = try String(element)
-            #expect(rendered.contains("hidden"))
-        }
+    @Test
+    func `Attribute chaining`() throws {
+        let element = tag("input")
+            .attribute("type", "text")
+            .attribute("name", "username")
+            .attribute("placeholder", "Enter username")
+            .attribute("required", "")
 
-        @Test
-        func `Attribute chaining`() throws {
-            let element = tag("input")
-                .attribute("type", "text")
-                .attribute("name", "username")
-                .attribute("placeholder", "Enter username")
-                .attribute("required", "")
+        let rendered = try String(HTML.Document { element })
 
-            let rendered = try String(HTML.Document { element })
-
-            print("rendered", rendered)
-            #expect(rendered.contains("type=\"text\""))
-            #expect(rendered.contains("name=\"username\""))
-            #expect(rendered.contains("placeholder=\"Enter username\""))
-            #expect(rendered.contains("required"))
-        }
+        print("rendered", rendered)
+        #expect(rendered.contains("type=\"text\""))
+        #expect(rendered.contains("name=\"username\""))
+        #expect(rendered.contains("placeholder=\"Enter username\""))
+        #expect(rendered.contains("required"))
     }
 }
 
