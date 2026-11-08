@@ -31,7 +31,7 @@ extension `Performance Tests` {
                     _ = try String(
                         HTML.Document {
                             tag("div") {
-                                for i in 0..<20 {
+                                (0..<20).forEach { i in
                                     tag("section")
                                         .attribute("id", "section-\(i)")
                                         .attribute("class", "content-block")
@@ -66,7 +66,7 @@ extension `Performance Tests` {
                     _ = try String(
                         HTML.Document {
                             tag("div") {
-                                for i in 0..<20 {
+                                (0..<20).forEach { i in
                                     tag("section")
                                         .attribute("id", "section-\(i)")
                                         .attribute("class", "content-block")
@@ -111,7 +111,7 @@ extension `Performance Tests` {
                     _ = try String(
                         HTML.Document {
                             tag("div") {
-                                for i in 0..<50 {
+                                (0..<50).forEach { i in
                                     tag("article")
                                         .attribute("id", "article-\(i)")
                                         .attribute("class", "post-content")

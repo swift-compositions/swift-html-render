@@ -45,7 +45,7 @@ extension `Performance Tests` {
                 _ = try String(
                     HTML.Document {
                         tag("div") {
-                            for i in 0..<100 {
+                            (0..<100).forEach { i in
                                 tag("div")
                                     .attribute("id", "item-\(i)")
                                     .attribute("class", "list-item")
@@ -176,7 +176,7 @@ extension `Performance Tests` {
                 _ = try String(
                     HTML.Document {
                         tag("table") {
-                            for i in 0..<50 {
+                            (0..<50).forEach { i in
                                 tag("tr") {
                                     tag("td") { "Item \(i)" }
                                     tag("td") {

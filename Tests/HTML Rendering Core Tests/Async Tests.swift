@@ -52,7 +52,7 @@ extension `Async Tests`.Unit {
         struct TestHTML: HTML.View, Sendable {
             var body: some HTML.View {
                 tag("ul") {
-                    for i in 1...5 {
+                    (1...5).forEach { i in
                         tag("li") { HTML.Text("Item \(i)") }
                     }
                 }

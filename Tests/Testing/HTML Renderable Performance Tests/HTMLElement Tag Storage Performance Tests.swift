@@ -122,7 +122,7 @@ extension `Performance Tests` {
                     HTML.Document {
                         tag("table") {
                             tag("tbody") {
-                                for i in 0..<6 {
+                                (0..<6).forEach { i in
                                     tag("tr") {
                                         tag("td") { "Label \(i)" }
                                         tag("td") { "Value \(i)" }
@@ -142,7 +142,7 @@ extension `Performance Tests` {
                     HTML.Document {
                         tag("table") {
                             tag("tbody") {
-                                for i in 0..<20 {
+                                (0..<20).forEach { i in
                                     tag("tr") {
                                         tag("td") { "Label \(i)" }
                                         tag("td") { ": Value \(i)" }
@@ -261,7 +261,7 @@ extension `Performance Tests` {
                 _ = try String(
                     HTML.Document {
                         tag("div") {
-                            for i in 0..<100 {
+                            (0..<100).forEach { i in
                                 tag("p") { "Paragraph \(i)" }
                             }
                         }
