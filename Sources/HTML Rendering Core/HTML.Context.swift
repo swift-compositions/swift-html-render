@@ -35,7 +35,7 @@ extension HTML {
 
 extension HTML.Context {
 
-    struct SavedState {
+    fileprivate struct SavedState {
         let tag: String
         let isVoid: Bool
         let isBlock: Bool
