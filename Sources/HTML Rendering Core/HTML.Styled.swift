@@ -4,7 +4,7 @@ public import WHATWG_HTML_Shared
 
 extension HTML {
 
-    public struct Styled<Content, P: W3C_CSS_Shared.Property> {
+    public struct Styled<Content, P: W3C_CSS_Shared::Property> {
 
         public let content: Renderer.Document.Indirect<Content>
 
@@ -70,7 +70,7 @@ extension HTML.Styled: Sendable where Content: Sendable, P: Sendable {}
 
 extension HTML.View {
 
-    public func inlineStyle<P: W3C_CSS_Shared.Property>(
+    public func inlineStyle<P: W3C_CSS_Shared::Property>(
         _ property: P?
     ) -> HTML.Styled<Self, P> {
         let ctx = HTML.Style.Rule.Context.current

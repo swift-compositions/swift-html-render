@@ -14,7 +14,7 @@ extension HTML.Style {
 
         public let pseudo: HTML.Pseudo?
 
-        public init<P: W3C_CSS_Shared.Property>(
+        public init<P: W3C_CSS_Shared::Property>(
             _ property: P,
             atRule: HTML.AtRule? = nil,
             selector: HTML.Selector? = nil,
