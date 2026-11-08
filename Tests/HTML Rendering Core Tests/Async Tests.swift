@@ -52,7 +52,7 @@ extension `Async Tests`.Unit {
         struct TestHTML: HTML.View, Sendable {
             var body: some HTML.View {
                 tag("ul") {
-                    (1...5).forEach { i in
+                    for i in 1...5 {
                         tag("li") { HTML.Text("Item \(i)") }
                     }
                 }
@@ -63,7 +63,7 @@ extension `Async Tests`.Unit {
         let bytes = [Byte](html)
         let result = String(decoding: bytes, as: UTF8.self)
 
-        (1...5).forEach { i in
+        for i in 1...5 {
             #expect(result.contains("Item \(i)"))
         }
     }
