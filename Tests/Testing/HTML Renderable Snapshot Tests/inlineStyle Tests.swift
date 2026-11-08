@@ -3,74 +3,72 @@ import Testing
 
 @testable import HTML_Rendering_Core
 
-extension `inlineStyle Tests`.`inlineStyle Tests` {
-    @Suite
-    struct `inlineStyle Tests` {
+@Suite
+struct `inlineStyle Tests` {
 
-        @Test
-        func `Basic inline style`() throws {
-            let styledElement = tag("div") {
-                HTML.Text("styled content")
-            }
-            .inlineStyle("color", "red")
-
-            let rendered = try String(HTML.Document { styledElement })
-            #expect(rendered.contains("color:red"))
-            #expect(rendered.contains("styled content"))
+    @Test
+    func `Basic inline style`() throws {
+        let styledElement = tag("div") {
+            HTML.Text("styled content")
         }
+        .inlineStyle("color", "red")
 
-        @Test
-        func `Multiple inline styles`() throws {
-            let styledElement = tag("div") {
-                HTML.Text("content")
-            }
-            .inlineStyle("color", "red")
-            .inlineStyle("background-color", "blue")
-            .inlineStyle("font-size", "16px")
+        let rendered = try String(HTML.Document { styledElement })
+        #expect(rendered.contains("color:red"))
+        #expect(rendered.contains("styled content"))
+    }
 
-            let rendered = try String(HTML.Document { styledElement })
-            #expect(rendered.contains("color:red"))
-            #expect(rendered.contains("background-color:blue"))
-            #expect(rendered.contains("font-size:16px"))
+    @Test
+    func `Multiple inline styles`() throws {
+        let styledElement = tag("div") {
+            HTML.Text("content")
         }
+        .inlineStyle("color", "red")
+        .inlineStyle("background-color", "blue")
+        .inlineStyle("font-size", "16px")
 
-        @Test
-        func `Style chaining`() throws {
-            let styledElement = tag("p") {
-                HTML.Text("paragraph")
-            }
-            .inlineStyle("margin", "10px")
-            .inlineStyle("padding", "5px")
+        let rendered = try String(HTML.Document { styledElement })
+        #expect(rendered.contains("color:red"))
+        #expect(rendered.contains("background-color:blue"))
+        #expect(rendered.contains("font-size:16px"))
+    }
 
-            let rendered = try String(HTML.Document { styledElement })
-            #expect(rendered.contains("margin:10px"))
-            #expect(rendered.contains("padding:5px"))
+    @Test
+    func `Style chaining`() throws {
+        let styledElement = tag("p") {
+            HTML.Text("paragraph")
         }
+        .inlineStyle("margin", "10px")
+        .inlineStyle("padding", "5px")
 
-        @Test
-        func `Style with attributes`() throws {
-            let element = tag("div") {
-                HTML.Text("content")
-            }
-            .attribute("class", "test-class")
-            .inlineStyle("display", "flex")
+        let rendered = try String(HTML.Document { styledElement })
+        #expect(rendered.contains("margin:10px"))
+        #expect(rendered.contains("padding:5px"))
+    }
 
-            let rendered = try String(HTML.Document { element })
-            #expect(rendered.contains("class=\"test-class\""))
-            #expect(rendered.contains("display:flex"))
+    @Test
+    func `Style with attributes`() throws {
+        let element = tag("div") {
+            HTML.Text("content")
         }
+        .attribute("class", "test-class")
+        .inlineStyle("display", "flex")
 
-        @Test
-        func `Empty style value`() throws {
-            let styledElement = tag("div") {
-                HTML.Text("content")
-            }
-            .inlineStyle("color", "")
+        let rendered = try String(HTML.Document { element })
+        #expect(rendered.contains("class=\"test-class\""))
+        #expect(rendered.contains("display:flex"))
+    }
 
-            let rendered = try String(HTML.Document { styledElement })
-
-            #expect(rendered.contains("content"))
+    @Test
+    func `Empty style value`() throws {
+        let styledElement = tag("div") {
+            HTML.Text("content")
         }
+        .inlineStyle("color", "")
+
+        let rendered = try String(HTML.Document { styledElement })
+
+        #expect(rendered.contains("content"))
     }
 }
 
