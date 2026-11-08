@@ -79,7 +79,7 @@ struct `Edge Cases Tests` {
     @Test
     func `Many sibling elements`() throws {
         let html = HTML.Group {
-            for i in 0..<1000 {
+            (0..<1000).forEach { i in
                 tag("span") { HTML.Text("Item \(i)") }
             }
         }
