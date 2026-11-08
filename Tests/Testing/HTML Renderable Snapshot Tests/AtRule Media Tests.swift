@@ -237,7 +237,7 @@ extension `Snapshot Tests` {
     }
 }
 
-fileprivate enum AtRule2 {
+private enum AtRule2 {
     case rule(String)
     indirect case nested(String, Self)
 }

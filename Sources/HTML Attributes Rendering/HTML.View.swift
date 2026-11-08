@@ -1,8 +1,8 @@
 import HTML_Rendering_Core
 import HTML_Standard_Attributes
-private import WHATWG_HTML_ScriptAttributes
 public import RFC_5646
 private import WHATWG_HTML_FormAttributes
+private import WHATWG_HTML_ScriptAttributes
 import WHATWG_HTML_TableAttributes
 
 extension HTML.View {
