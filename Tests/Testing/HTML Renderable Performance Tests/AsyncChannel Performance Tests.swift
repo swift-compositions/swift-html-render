@@ -8,7 +8,7 @@ extension `Performance Tests` {
         @Test(
             .disabled("Performance test - enable manually")
         )
-        func largeContentStreaming() async throws {
+        func `large content streaming`() async throws {
             let itemCount = 1_000_0000
 
             struct ListHTML: HTML.View, Sendable {
