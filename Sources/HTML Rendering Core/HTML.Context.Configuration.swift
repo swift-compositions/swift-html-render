@@ -66,9 +66,4 @@ extension HTML.Context.Configuration {
 }
 
 extension HTML.Context.Configuration {
-
-    public struct Error: Swift.Error {
-
-        public let message: String
-    }
 }
