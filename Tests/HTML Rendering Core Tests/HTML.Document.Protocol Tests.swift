@@ -36,3 +36,28 @@ struct `HTML.__DocumentProtocol._render Tests` {
         }
     }
 }
+
+extension `HTML.__DocumentProtocol._render Tests` {
+
+    @Test
+    func `styles registered while rendering the head are written to the stylesheet`() throws {
+        let document = HTML.Document {
+            tag("div") {
+                HTML.Text("BODY_MARKER")
+            }
+            .inlineStyle("color", "red")
+        } head: {
+            tag("title") {
+                HTML.Text("HEAD_MARKER")
+            }
+            .inlineStyle("color", "blue")
+        }
+
+        let rendered = try String(document)
+
+        #expect(rendered.contains("color:red"), "\(rendered)")
+        #expect(rendered.contains("color:blue"), "\(rendered)")
+        #expect(rendered.contains("color-0"), "\(rendered)")
+        #expect(rendered.contains("color-1"), "\(rendered)")
+    }
+}

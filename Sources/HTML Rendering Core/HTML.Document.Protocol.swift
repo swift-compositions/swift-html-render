@@ -37,10 +37,6 @@ extension HTML.__DocumentProtocol {
         bodyRenderCtx.render(html.body)
         let bodyBytes = bodyState.value.bytes
 
-        bodyState.value.styles.forEach { key, value in
-            context.styles[key] = value
-        }
-
         let newline = configuration.newline
 
         let contentIndent = indent + indent
@@ -54,16 +50,16 @@ extension HTML.__DocumentProtocol {
         context.bytes.append(contentsOf: indent)
         context.bytes.append(contentsOf: [Byte].html.tag.headOpen)
 
-        let headState = Ownership.Mutable(HTML.Context(configuration))
-        headState.value.currentIndentation = indent + indent
-        var headRenderCtx = Renderer.Document.Context.html(state: headState)
+        bodyState.value.bytes = ContiguousArray<Byte>()
+        bodyState.value.currentIndentation = indent + indent
+        var headRenderCtx = Renderer.Document.Context.html(state: bodyState)
         headRenderCtx.render(html.head)
-        let headBytes = headState.value.bytes
+        let headBytes = bodyState.value.bytes
         if headBytes.starts(with: contentIndent) {
             context.bytes.append(contentsOf: newline)
         }
         context.bytes.append(contentsOf: headBytes)
-        headState.value.styles.forEach { key, value in
+        bodyState.value.styles.forEach { key, value in
             context.styles[key] = value
         }
 
