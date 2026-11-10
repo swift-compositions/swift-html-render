@@ -61,22 +61,7 @@ extension HTML.Context {
 
 extension HTML.Context {
     public mutating func text(_ content: borrowing String) {
-        let copy = copy content
-        for byte in copy.utf8.lazy.map(Byte.init(bitPattern:)) {
-            switch byte {
-            case .ascii.ampersand:
-                bytes.append(contentsOf: [Byte].html.ampersand)
-
-            case .ascii.lessThanSign:
-                bytes.append(contentsOf: [Byte].html.lessThan)
-
-            case .ascii.greaterThanSign:
-                bytes.append(contentsOf: [Byte].html.greaterThan)
-
-            default:
-                bytes.append(byte)
-            }
-        }
+        write(escaping: copy content, quotes: false)
     }
 
     public static func _pushBlock(
@@ -250,7 +235,7 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<br>".utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: "<br>")
     }
 
     public mutating func thematicBreak() {
@@ -261,7 +246,7 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<hr>".utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: "<hr>")
     }
 
     public mutating func image(source: String, alt: String) {
@@ -272,18 +257,18 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<img src=\"".utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: "<img src=\"")
         escapeAttributeValue(source)
-        bytes.append(contentsOf: "\" alt=\"".utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: "\" alt=\"")
         escapeAttributeValue(alt)
-        bytes.append(contentsOf: "\">".utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: "\">")
     }
 
     public static func _pushLink(_ context: inout Self, destination: borrowing String) {
         let copy = copy destination
-        context.bytes.append(contentsOf: "<a href=\"".utf8.lazy.map(Byte.init(bitPattern:)))
+        context.write(utf8: "<a href=\"")
         context.escapeAttributeValue(copy)
-        context.bytes.append(contentsOf: "\">".utf8.lazy.map(Byte.init(bitPattern:)))
+        context.write(utf8: "\">")
 
         let savedAttributes = context.attributes
         let savedIndentation = context.currentIndentation
@@ -316,7 +301,7 @@ extension HTML.Context {
             }
             bytes.append(contentsOf: currentIndentation)
         }
-        bytes.append(contentsOf: "<div style=\"page-break-after:always\"></div>".utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: "<div style=\"page-break-after:always\"></div>")
     }
 }
 
@@ -324,12 +309,12 @@ extension HTML.Context {
 
     mutating func writeOpeningTag(_ tag: String) {
         bytes.append(.ascii.lessThanSign)
-        bytes.append(contentsOf: tag.utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: tag)
 
         let currentAttributes = attributes
         currentAttributes.forEach { name, value in
             bytes.append(.ascii.space)
-            bytes.append(contentsOf: name.utf8.lazy.map(Byte.init(bitPattern:)))
+            write(utf8: name)
             if !value.isEmpty {
                 bytes.append(.ascii.equalsSign)
                 bytes.append(.ascii.dquote)
@@ -343,31 +328,60 @@ extension HTML.Context {
     mutating func writeClosingTag(_ tag: String) {
         bytes.append(.ascii.lessThanSign)
         bytes.append(.ascii.slant)
-        bytes.append(contentsOf: tag.utf8.lazy.map(Byte.init(bitPattern:)))
+        write(utf8: tag)
         bytes.append(.ascii.greaterThanSign)
     }
 
     mutating func escapeAttributeValue(_ value: String) {
-        for byte in value.utf8.lazy.map(Byte.init(bitPattern:)) {
-            switch byte {
-            case .ascii.dquote:
-                bytes.append(contentsOf: [Byte].html.doubleQuotationMark)
+        write(escaping: value, quotes: true)
+    }
+}
 
-            case .ascii.apostrophe:
-                bytes.append(contentsOf: [Byte].html.apostrophe)
+extension HTML.Context {
 
-            case .ascii.ampersand:
-                bytes.append(contentsOf: [Byte].html.ampersand)
+    /// Appends a string's UTF-8 in one copy.
+    mutating func write(utf8 string: String) {
+        var string = string
+        string.withUTF8 { utf8 in
+            unsafe write(utf8: utf8)
+        }
+    }
 
-            case .ascii.lessThanSign:
-                bytes.append(contentsOf: [Byte].html.lessThan)
+    /// Appends UTF-8 in one copy. `Byte` is a frozen wrapper of a single `UInt8`, so the two share a layout.
+    private mutating func write(utf8: UnsafeBufferPointer<UInt8>) {
+        guard !utf8.isEmpty else { return }
+        unsafe utf8.withMemoryRebound(to: Byte.self) { rebound in
+            unsafe bytes.append(contentsOf: rebound)
+        }
+    }
 
-            case .ascii.greaterThanSign:
-                bytes.append(contentsOf: [Byte].html.greaterThan)
-
-            default:
-                bytes.append(byte)
+    /// Appends a string's UTF-8 with `&`, `<` and `>` replaced by their entities, and `"` and `'` too when
+    /// `quotes` is set. The stretches between two replaced bytes are each appended in one copy.
+    private mutating func write(escaping string: String, quotes: Bool) {
+        var string = string
+        string.withUTF8 { utf8 in
+            let raw = UnsafeRawBufferPointer(utf8)
+            let count = utf8.count
+            var written = 0
+            var index = 0
+            while index < count {
+                let entity: [Byte]
+                switch unsafe raw[index] {
+                case 0x26: entity = .html.ampersand
+                case 0x3C: entity = .html.lessThan
+                case 0x3E: entity = .html.greaterThan
+                case 0x22 where quotes: entity = .html.doubleQuotationMark
+                case 0x27 where quotes: entity = .html.apostrophe
+                default:
+                    index += 1
+                    continue
+                }
+                unsafe write(utf8: UnsafeBufferPointer(rebasing: utf8[written..<index]))
+                bytes.append(contentsOf: entity)
+                index += 1
+                written = index
             }
+            unsafe write(utf8: UnsafeBufferPointer(rebasing: utf8[written..<count]))
         }
     }
 }
@@ -637,13 +651,6 @@ extension HTML {
 }
 
 extension HTML.Context {
-
-    public typealias Attributes = __DictionaryOrdered<
-        Ownership.Shared<
-            Hash.Entry<String, String>,
-            Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<Hash.Entry<String, String>>>.Linear>
-        >
-    >
 
     public typealias Styles = __DictionaryOrdered<
         Ownership.Shared<
