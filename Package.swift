@@ -24,6 +24,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-optic.git", branch: "main"),
+        .package(url: "https://github.com/swift-whatwg/swift-whatwg-dom.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-async-channel.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-renderer.git",
@@ -108,6 +110,8 @@ let package = Package(
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Storage", package: "swift-storage"),
                 .product(name: "Store", package: "swift-store"),
+                .product(name: "Optic", package: "swift-optic"),
+                .product(name: "WHATWG DOM", package: "swift-whatwg-dom"),
             ]
         ),
 

@@ -195,7 +195,6 @@ extension HTML.Tag.Element where Content: HTML.View {
 
 extension HTML.Tag.Element: Renderer.Document.View where Content: HTML.View {
     public typealias Body = Never
-    public var body: Never { fatalError("Body is Never and must not be accessed.") }
 
     public static func _render(
         _ view: borrowing Self,

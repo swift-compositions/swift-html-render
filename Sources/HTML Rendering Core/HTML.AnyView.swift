@@ -22,7 +22,6 @@ extension HTML {
 
 extension HTML.AnyView {
     public typealias Body = Never
-    public var body: Never { fatalError("Body is Never and must not be accessed.") }
 
     public static func _render(
         _ view: borrowing HTML.AnyView,

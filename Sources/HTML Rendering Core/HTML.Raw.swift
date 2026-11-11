@@ -21,7 +21,6 @@ extension HTML {
 
 extension HTML.Raw {
     public typealias Body = Never
-    public var body: Never { fatalError("Body is Never and must not be accessed.") }
 
     public static func _render(
         _ view: borrowing Self,
