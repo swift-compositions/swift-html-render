@@ -58,7 +58,7 @@ extension HTML.Selector {
 
     public func or(_ others: HTML.Selector...) -> HTML.Selector {
         let allSelectors = [self] + others
-        return .init(rawValue: allSelectors.map(\.rawValue).joined(separator: ", "))
+        return .init(rawValue: allSelectors.map({ $0.rawValue }).joined(separator: ", "))
     }
 
     public func and(_ other: HTML.Selector) -> HTML.Selector {

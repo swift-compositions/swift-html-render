@@ -9,7 +9,7 @@ extension StringProtocol {
         configuration: HTML.Context.Configuration? = nil
     ) throws(HTML.Context.Configuration.Error) {
         let bytes = ContiguousArray<Byte>(html, configuration: configuration)
-        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
+        self = Self(decoding: bytes.lazy.map({ $0.bitPattern }), as: UTF8.self)
     }
 }
 
@@ -21,7 +21,7 @@ extension StringProtocol {
         configuration: HTML.Context.Configuration? = nil
     ) async {
         let bytes = await [Byte](view, configuration: configuration)
-        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
+        self = Self(decoding: bytes.lazy.map({ $0.bitPattern }), as: UTF8.self)
     }
 }
 
@@ -32,7 +32,7 @@ extension StringProtocol {
         configuration: HTML.Context.Configuration? = nil
     ) throws(HTML.Context.Configuration.Error) {
         let bytes = ContiguousArray<Byte>(document, configuration: configuration)
-        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
+        self = Self(decoding: bytes.lazy.map({ $0.bitPattern }), as: UTF8.self)
     }
 }
 
@@ -44,6 +44,6 @@ extension StringProtocol {
         configuration: HTML.Context.Configuration? = nil
     ) async {
         let bytes = await [Byte](document, configuration: configuration)
-        self = Self(decoding: bytes.lazy.map(\.bitPattern), as: UTF8.self)
+        self = Self(decoding: bytes.lazy.map({ $0.bitPattern }), as: UTF8.self)
     }
 }
