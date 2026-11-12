@@ -2,23 +2,16 @@ import HTML_Rendering_Core
 import HTML_Standard_Attributes
 
 extension HTML.View {
-    @HTML.Builder
     package func attribute(
         _ value: String,
         _ condition: @autoclosure () -> Bool?
-    ) -> some HTML.View {
-        let conditionResult = condition()
-        if conditionResult == true {
-            self.attribute(value, "")
-        } else {
-            self.attribute("", String?.none)
-        }
+    ) -> HTML._Attributes<Self> {
+        self.attribute(value, condition() == true ? "" : String?.none)
     }
 
-    @HTML.Builder
     package func attribute<Attribute: HTML.BooleanAttribute>(
         boolean value: Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(Attribute.attribute, value == true)
     }
 }

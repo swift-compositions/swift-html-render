@@ -74,7 +74,7 @@ extension HTML.View {
     @discardableResult
     package func allowfullscreen(
         _ value: HTML.Allowfullscreen.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -104,7 +104,7 @@ extension HTML.View {
     @discardableResult
     package func async(
         _ value: WHATWG.HTML.Async.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -134,7 +134,7 @@ extension HTML.View {
     @discardableResult
     package func autoplay(
         _ value: HTML.Autoplay.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -197,7 +197,7 @@ extension HTML.View {
     }
 
     @HTML.Builder
-    package func checked(_ value: HTML.Checked.Attribute?) -> some HTML.View {
+    package func checked(_ value: HTML.Checked.Attribute?) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -267,7 +267,7 @@ extension HTML.View {
     @discardableResult
     package func controls(
         _ value: HTML.Controls.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -308,7 +308,7 @@ extension HTML.View {
     @discardableResult
     package func `default`(
         _ value: HTML.Default.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -318,7 +318,7 @@ extension HTML.View {
     @discardableResult
     package func `defer`(
         _ value: HTML.Defer.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -369,7 +369,7 @@ extension HTML.View {
     }
 
     @HTML.Builder
-    package func disabled(_ value: HTML.Disabled.Attribute?) -> some HTML.View {
+    package func disabled(_ value: HTML.Disabled.Attribute?) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -490,7 +490,7 @@ extension HTML.View {
     @discardableResult
     package func formNovalidate(
         _ value: HTML.FormNovalidate.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -543,7 +543,7 @@ extension HTML.View {
     @discardableResult
     public func autofocus(
         _ value: HTML.Autofocus.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -699,7 +699,7 @@ extension HTML.View {
     }
 
     @HTML.Builder
-    package func inert(_ value: HTML.Inert.Attribute?) -> some HTML.View {
+    package func inert(_ value: HTML.Inert.Attribute?) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -822,7 +822,7 @@ extension HTML.View {
     @discardableResult
     public func itemscope(
         _ value: HTML.Itemscope.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1242,7 +1242,7 @@ extension HTML.View {
     @discardableResult
     package func isMap(
         _ value: HTML.Ismap.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1315,7 +1315,7 @@ extension HTML.View {
     @discardableResult
     package func loop(
         _ value: HTML.Loop.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1418,7 +1418,7 @@ extension HTML.View {
     }
 
     @HTML.Builder
-    package func multiple(_ value: HTML.Multiple.Attribute?) -> some HTML.View {
+    package func multiple(_ value: HTML.Multiple.Attribute?) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1428,7 +1428,7 @@ extension HTML.View {
     @discardableResult
     package func muted(
         _ value: HTML.Muted.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1468,7 +1468,7 @@ extension HTML.View {
     @discardableResult
     package func nomodule(
         _ value: HTML.Nomodule.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1482,7 +1482,7 @@ extension HTML.View {
     @HTML.Builder
     package func novalidate(
         _ value: HTML.Novalidate.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1523,7 +1523,7 @@ extension HTML.View {
     @discardableResult
     package func open(
         _ value: HTML.Open.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1627,7 +1627,7 @@ extension HTML.View {
     @HTML.Builder
     package func readonly(
         _ value: HTML.Readonly.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1661,7 +1661,7 @@ extension HTML.View {
     @HTML.Builder
     package func required(
         _ value: HTML.Required.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1671,7 +1671,7 @@ extension HTML.View {
     @discardableResult
     package func reversed(
         _ value: HTML.Reversed.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1732,7 +1732,7 @@ extension HTML.View {
     @discardableResult
     package func selected(
         _ value: HTML.Selected.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }
@@ -1921,7 +1921,7 @@ extension HTML.View {
     @HTML.Builder
     package func truespeed(
         _ value: HTML.Truespeed.Attribute?
-    ) -> some HTML.View {
+    ) -> HTML._Attributes<Self> {
         self.attribute(boolean: value)
     }
 }

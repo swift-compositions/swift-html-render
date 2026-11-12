@@ -1,7 +1,15 @@
+import Buffer
+import Buffer_Linear_Primitive
 public import Byte
 import Dictionary_Ordered
+import Hash_Indexed_Primitive
+import Hash_Table_Primitive
+import Memory
+import Memory_Allocator
 import Ownership
+import Ownership_Shared_Primitive
 import Renderer
+import Storage
 public import WHATWG_HTML_Shared
 
 extension HTML {
