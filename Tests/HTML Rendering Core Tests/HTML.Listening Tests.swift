@@ -49,6 +49,11 @@ extension `HTML.Listening Tests`.`Listeners and bindings add nothing to the serv
     }
 
     @Test
+    func `pressed renders the mixed state of a tri-state toggle`() throws {
+        #expect(try String(tag("button").pressed(.mixed)) == #"<button aria-pressed="mixed"></button>"#)
+    }
+
+    @Test
     func `ForEach renders each row in order`() throws {
         let view = tag("ul") {
             HTML.ForEach([3, 1, 2], id: { $0 }) { number in

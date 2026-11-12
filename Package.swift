@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-optic.git", branch: "main"),
         .package(url: "https://github.com/swift-whatwg/swift-whatwg-dom.git", branch: "main"),
+        .package(url: "https://github.com/swift-w3c/swift-w3c-wai-aria.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-async-channel.git", branch: "main"),
         .package(
             url: "https://github.com/swift-atoms/swift-renderer.git",
@@ -112,6 +113,7 @@ let package = Package(
                 .product(name: "Store", package: "swift-store"),
                 .product(name: "Optic", package: "swift-optic"),
                 .product(name: "WHATWG DOM", package: "swift-whatwg-dom"),
+                .product(name: "W3C WAI-ARIA", package: "swift-w3c-wai-aria"),
             ]
         ),
 

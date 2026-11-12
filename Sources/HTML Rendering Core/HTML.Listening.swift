@@ -1,5 +1,6 @@
 public import Optic
 public import Renderer
+public import W3C_WAI_ARIA
 public import WHATWG_DOM
 public import WHATWG_HTML_Shared
 
@@ -53,9 +54,7 @@ extension HTML.View {
         )
     }
 
-    // swift-linter:disable:next bool public parameter
-    // REASON: aria-pressed is a two-state attribute, and .pressed(Bool) is the spelling the product owner chose.
-    public func pressed(_ pressed: Bool) -> HTML._Attributes<Self> {
-        self.attribute("aria-pressed", pressed ? "true" : "false")
+    public func pressed(_ state: W3C_WAI_ARIA.Tristate) -> HTML._Attributes<Self> {
+        self.attribute(W3C_WAI_ARIA.Pressed.name, String(state))
     }
 }
