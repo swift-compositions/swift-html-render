@@ -1,9 +1,9 @@
 import HTML_Rendering
-import Optic
-import WHATWG_DOM
 import HTML_Standard
+import Optic
 import Renderer
 import Testing
+import WHATWG_DOM
 
 @_spi(DynamicHTML) @testable import HTML_Rendering_Core
 
@@ -77,12 +77,20 @@ extension `HTML.Listening Tests`.`Listeners reach the renderer and write back` {
             break: .init(line: {}, thematic: {}, page: {}),
             image: { _, _ in },
             push: .init(
-                block: { _, _ in }, inline: { _, _ in }, list: { _, _ in }, item: {}, link: { _ in },
+                block: { _, _ in },
+                inline: { _, _ in },
+                list: { _, _ in },
+                item: {},
+                link: { _ in },
                 element: { name, _, _, _ in log.events.append("open \(name)") },
                 identity: { log.events.append("row \($0.hash == Renderer.Document.Identity("b").hash ? "b" : "?")") }
             ),
             pop: .init(
-                block: {}, inline: {}, list: {}, item: {}, link: {},
+                block: {},
+                inline: {},
+                list: {},
+                item: {},
+                link: {},
                 element: { _ in log.events.append("close") },
                 identity: { log.events.append("end row") }
             ),

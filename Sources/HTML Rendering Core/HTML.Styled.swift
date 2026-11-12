@@ -53,9 +53,9 @@ extension HTML.Styled: Renderer.Document.View where Content: HTML.View {
         if !handled, let style = view.style {
             if let className = context.register(
                 style: style.declaration,
-                atRule: style.atRule?.rawValue,
-                selector: style.selector?.rawValue,
-                pseudo: style.pseudo?.rawValue
+                atRule: style.atRule.map { String($0) },
+                selector: style.selector.map { String($0) },
+                pseudo: style.pseudo.map { String($0) }
             ) {
                 context.add(class: className)
             }
