@@ -195,6 +195,7 @@ extension HTML.Tag.Element where Content: HTML.View {
 
 extension HTML.Tag.Element: Renderer.Document.View where Content: HTML.View {
     public typealias Body = Never
+    public var body: Never { Self.unrendered }
 
     public static func _render(
         _ view: borrowing Self,

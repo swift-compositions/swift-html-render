@@ -22,6 +22,7 @@ extension HTML {
 
 extension HTML.AnyView {
     public typealias Body = Never
+    public var body: Never { Self.unrendered }
 
     public static func _render(
         _ view: borrowing HTML.AnyView,

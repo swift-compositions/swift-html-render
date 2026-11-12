@@ -7,6 +7,11 @@ extension HTML {
     }
 }
 
+extension HTML.View where Body == Never {
+
+    static var unrendered: Never { fatalError("Body is Never and must not be accessed.") }
+}
+
 extension HTML.View {
 
     public func attribute(_ name: String, _ value: String? = "") -> HTML._Attributes<Self> {
