@@ -28,11 +28,7 @@ let package = Package(
         .package(url: "https://github.com/swift-whatwg/swift-whatwg-dom.git", branch: "main"),
         .package(url: "https://github.com/swift-w3c/swift-w3c-wai-aria.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-async-channel.git", branch: "main"),
-        .package(
-            url: "https://github.com/swift-atoms/swift-renderer.git",
-            branch: "main",
-            traits: ["Document"]
-        ),
+        .package(url: "https://github.com/swift-atoms/swift-renderer.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main", traits: ["Coder", "Parser", "Serializer"]),
         .package(url: "https://github.com/swift-standards/swift-html-standard.git", branch: "main"),
         .package(url: "https://github.com/swift-w3c/swift-w3c-css.git", branch: "main"),
