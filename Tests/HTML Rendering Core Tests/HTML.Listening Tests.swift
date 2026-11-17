@@ -2,6 +2,7 @@ import HTML_Rendering
 import HTML_Standard
 import Optic
 import Renderer
+import Renderer_Document
 import Testing
 import WHATWG_DOM
 

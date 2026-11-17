@@ -1,6 +1,7 @@
 import HTML_Rendering
 import Ownership
 import Renderer
+import Renderer_Document
 import Testing
 
 @testable import HTML_Rendering_Core

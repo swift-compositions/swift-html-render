@@ -10,6 +10,7 @@ public import Memory
 public import Memory_Allocator
 public import Ownership_Shared_Primitive
 public import Renderer
+public import Renderer_Document
 public import Storage
 public import WHATWG_HTML_Shared
 

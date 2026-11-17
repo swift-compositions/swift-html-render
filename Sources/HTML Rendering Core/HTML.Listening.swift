@@ -1,5 +1,6 @@
 public import Optic
 public import Renderer
+public import Renderer_Document
 public import W3C_WAI_ARIA
 public import WHATWG_DOM
 public import WHATWG_HTML_Shared

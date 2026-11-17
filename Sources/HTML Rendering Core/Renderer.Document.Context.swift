@@ -1,5 +1,6 @@
 public import Ownership
 import Renderer
+import Renderer_Document
 public import WHATWG_HTML_Shared
 
 extension Renderer.Document.Context {

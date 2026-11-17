@@ -1,6 +1,7 @@
 public import Byte
 import Ownership
 import Renderer
+import Renderer_Document
 public import WHATWG_HTML_Shared
 
 extension RangeReplaceableCollection<Byte> {

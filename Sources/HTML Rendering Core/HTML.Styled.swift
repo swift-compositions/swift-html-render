@@ -1,4 +1,5 @@
 import Renderer
+import Renderer_Document
 public import W3C_CSS_Shared
 public import WHATWG_HTML_Shared
 

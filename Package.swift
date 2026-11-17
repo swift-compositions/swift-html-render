@@ -29,6 +29,7 @@ let package = Package(
         .package(url: "https://github.com/swift-w3c/swift-w3c-wai-aria.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-async-channel.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-renderer.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-renderer-document.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main", traits: ["Coder", "Parser", "Serializer"]),
         .package(url: "https://github.com/swift-standards/swift-html-standard.git", branch: "main"),
         .package(url: "https://github.com/swift-w3c/swift-w3c-css.git", branch: "main"),
@@ -83,6 +84,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Byte", package: "swift-byte"),
                 .product(name: "Renderer", package: "swift-renderer"),
+                .product(name: "Renderer Document", package: "swift-renderer-document"),
                 .product(name: "ASCII", package: "swift-ascii"),
                 .product(name: "W3C CSS Shared", package: "swift-w3c-css"),
                 .product(name: "HTML Standard", package: "swift-html-standard"),

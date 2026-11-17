@@ -9,6 +9,7 @@ import Memory_Allocator
 import Ownership
 import Ownership_Shared_Primitive
 import Renderer
+import Renderer_Document
 import Storage
 public import WHATWG_HTML_Shared
 
