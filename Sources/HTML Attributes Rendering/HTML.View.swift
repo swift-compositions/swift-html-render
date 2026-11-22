@@ -869,7 +869,7 @@ extension HTML.View {
 
     @discardableResult
     public func lang(
-        _ language: RFC_5646.LanguageTag
+        _ language: IETF.RFC.`5646`.LanguageTag
     ) -> HTML._Attributes<Self> {
         self.attribute(HTML.Lang.Attribute.attribute, language.value)
     }
