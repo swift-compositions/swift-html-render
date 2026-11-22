@@ -10,7 +10,11 @@ extension HTML {
 
 extension HTML.View where Body == Never {
 
-    static var unrendered: Never { fatalError("Body is Never and must not be accessed.") }
+    static var unrendered: Never {
+        // swift-linter:disable:next fatal error outside tests
+        // REASON: The only statement of a property of type Never, which the rule exempts since swift-institute/Issues#271; the linter CI runs predates that.
+        fatalError("Body is Never and must not be accessed.")
+    }
 }
 
 extension HTML.View {

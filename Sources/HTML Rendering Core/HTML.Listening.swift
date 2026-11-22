@@ -55,7 +55,7 @@ extension HTML.View {
         )
     }
 
-    public func pressed(_ state: W3C_WAI_ARIA.Tristate) -> HTML._Attributes<Self> {
-        self.attribute(W3C_WAI_ARIA.Pressed.name, String(state))
+    public func pressed(_ state: W3C.WAI_ARIA.Tristate) -> HTML._Attributes<Self> {
+        self.attribute(W3C.WAI_ARIA.Pressed.name, String(state))
     }
 }
