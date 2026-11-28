@@ -560,6 +560,7 @@ extension HTML.View {
 extension HTML.View {
     /// Sets the class attribute from typed names, so a view and the stylesheet that styles it read one source.
     @discardableResult
+    @_disfavoredOverload
     public func `class`<Name: RawRepresentable>(
         _ names: Name...
     ) -> HTML._Attributes<Self> where Name.RawValue == String {
@@ -568,6 +569,7 @@ extension HTML.View {
 
     /// Sets the class attribute from a list of typed names, for a list chosen at run time.
     @discardableResult
+    @_disfavoredOverload
     public func `class`<Name: RawRepresentable>(
         _ names: [Name]
     ) -> HTML._Attributes<Self> where Name.RawValue == String {
