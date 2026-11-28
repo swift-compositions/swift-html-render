@@ -558,6 +558,16 @@ extension HTML.View {
 }
 
 extension HTML.View {
+    /// Sets the class attribute from typed names, so a view and the stylesheet that styles it read one source.
+    @discardableResult
+    public func `class`<Name: RawRepresentable>(
+        _ names: Name...
+    ) -> HTML._Attributes<Self> where Name.RawValue == String {
+        self.attribute(HTML.Class.Attribute.attribute, names.map(\.rawValue).joined(separator: " "))
+    }
+}
+
+extension HTML.View {
     @discardableResult
     public func contenteditable(
         _ value: HTML.Contenteditable.Attribute
