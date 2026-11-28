@@ -26,23 +26,38 @@ extension HTML.Script.Element {
 }
 
 extension HTML.Script.Element.Filled {
+    /// Whether the bytes from `index` on would open a comment or open or close a script
+    /// element. A tag name matches in any letter case, as it does for an HTML parser.
+    @usableFromInline
+    static func isDangerous(_ bytes: UnsafeBufferPointer<UInt8>, at index: Int) -> Bool {
+        var next = index + 1
+        guard next < bytes.count else { return false }
+        if bytes[next] == 0x21 {
+            return next + 2 < bytes.count && bytes[next + 1] == 0x2D && bytes[next + 2] == 0x2D
+        }
+        if bytes[next] == 0x2F { next += 1 }
+        guard next + 6 <= bytes.count else { return false }
+        for (offset, letter) in "script".utf8.enumerated() where bytes[next + offset] | 0x20 != letter {
+            return false
+        }
+        return true
+    }
+
     @usableFromInline
     var escaped: String {
-        var escaped = ""
-        escaped.unicodeScalars.reserveCapacity(text.unicodeScalars.count)
-        for index in text.unicodeScalars.indices {
-            let scalar = text.unicodeScalars[index]
-            if scalar == "<",
-                text.unicodeScalars[index...].starts(with: "<!--".unicodeScalars)
-                    || text.unicodeScalars[index...].starts(with: "<script".unicodeScalars)
-                    || text.unicodeScalars[index...].starts(with: "</script".unicodeScalars)
-            {
-                escaped.unicodeScalars.append(contentsOf: #"\u003C"#.unicodeScalars)
-            } else {
-                escaped.unicodeScalars.append(scalar)
+        var text = text
+        return text.withUTF8 { bytes in
+            var out: [UInt8] = []
+            var copied = 0
+            for index in bytes.indices where bytes[index] == 0x3C && Self.isDangerous(bytes, at: index) {
+                out.append(contentsOf: bytes[copied..<index])
+                out.append(contentsOf: #"\u003C"#.utf8)
+                copied = index + 1
             }
+            guard copied > 0 else { return String(decoding: bytes, as: UTF8.self) }
+            out.append(contentsOf: bytes[copied...])
+            return String(decoding: out, as: UTF8.self)
         }
-        return escaped
     }
 
     public var body: some HTML.View {

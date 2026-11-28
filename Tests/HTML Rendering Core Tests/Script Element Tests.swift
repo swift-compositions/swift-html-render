@@ -22,4 +22,12 @@ import Testing
         }
         #expect(try String(html) == "<head><script>a</script><script>b</script></head>")
     }
+
+    @Test func `a closing tag in any letter case is written safely`() throws {
+        let html = HTML.Script.Element() { "a</SCRIPT>b<Script>c</scripT d<b>" }
+        let text = try String(html)
+        #expect(!text.dropLast(9).lowercased().contains("</script"))
+        #expect(text.hasSuffix("d<b></script>"))
+        #expect(text.contains("a"+"\\u003C/SCRIPT>b"+"\\u003CScript>c"))
+    }
 }
