@@ -17,7 +17,7 @@ public struct TestProperty: W3C_CSS_Shared.Property, GlobalConvertible {
     }
 
     public var declaration: Declaration {
-        Declaration(description: "\(name):\(value)")
+        Declaration(property: name, value: value)
     }
 }
 
