@@ -565,6 +565,14 @@ extension HTML.View {
     ) -> HTML._Attributes<Self> where Name.RawValue == String {
         self.attribute(HTML.Class.Attribute.attribute, names.map(\.rawValue).joined(separator: " "))
     }
+
+    /// Sets the class attribute from a list of typed names, for a list chosen at run time.
+    @discardableResult
+    public func `class`<Name: RawRepresentable>(
+        _ names: [Name]
+    ) -> HTML._Attributes<Self> where Name.RawValue == String {
+        self.attribute(HTML.Class.Attribute.attribute, names.map(\.rawValue).joined(separator: " "))
+    }
 }
 
 extension HTML.View {

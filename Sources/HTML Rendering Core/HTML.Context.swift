@@ -426,8 +426,12 @@ extension HTML.Context {
 }
 
 extension HTML.Context {
+    /// Sets an attribute. The class attribute is a set of names, so a value for it joins the names already there.
     public mutating func set(attribute name: String, _ value: String?) {
-        if let value {
+        guard let value else { return }
+        if name == "class", let existing = attributes[name], !existing.isEmpty {
+            attributes[name] = value.isEmpty ? existing : existing + " " + value
+        } else {
             attributes[name] = value
         }
     }
